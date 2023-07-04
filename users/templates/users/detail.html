@@ -1,0 +1,101 @@
+{% extends 'blog/base.html' %}
+
+
+{% block content %}
+<div class="ui grid">
+    <br>
+    <div class="row">
+        <div class="four wide column">
+            <img class="ui medium rounded image" src="{{object.image.url}}">
+            <h1>{{object.user}}</h1>
+            <div class="ui vertical fluid menu">
+                <div class="item">
+                    Posts
+                    <div class="ui label">{{ object.get_posts_no }}</div>
+                </div>
+                <div class="item">
+                    Likes given
+                    <div class="ui label">{{ object.get_likes_given_no }}</div>
+                </div>
+                <div class="item">
+                    Likes received
+                    <div class="ui label">{{ object.get_likes_recieved_no }}</div>
+                </div>
+                <div class="item">
+                    Friends
+                    <div class="ui label">{{ object.get_friends_no }}</div>
+                </div>
+            </div>
+
+            {% if object.user not in rel_receiver and object.user not in rel_sender %}
+                <form action="{% url 'send-invite' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="profile_pk" value="{{object.pk}}">
+                    <button type="submit" class="ui positive basic button mb-5 w-big"><i class="plus square icon"></i>Add to friends</button>
+                </form>
+            {% endif %}
+
+            {% if object.user in rel_receiver and request.user not in object.friends.all %}
+                <button class="ui disabled button mb-5 w-big"><i class="user icon"></i>Waiting for approval</button>
+            {% endif %}
+
+            {% if request.user in object.friends.all %}
+                <form action="{% url 'remove-friend' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="profile_pk" value="{{object.pk}}">
+                    <button type="submit" class="ui negative basic button mb-5 w-big"><i class="minus square icon"></i>Remove from friends</button>
+                </form>
+            {% endif %}
+
+        </div>
+        <div class="twelve wide column">
+            {% if len_posts %}
+                {% for post in posts %}
+                <div class="main-block post-with-photo">
+                    <div class="Post-Box">
+                        <div class="header row ">
+                            <div class="col-2">
+                                <div class=" pt-2 pl-2    d-inline-block">
+                                    <div class="Profile-Picture " style="background: url('{{ post.author.image.url }}') "></div>
+                                </div>
+                            </div>
+                            <div class="col-8 p-l-0">
+                                <div class="UserName d-inline-block mt-3">
+                                    <p><a href="#" class="font-weight-bold">{{ post.author }}</a></p>
+                                    <p class="lh-1-2"><a href="" class="fs-10">{{ post.date_posted|date:"F d, Y" }}</a> <i class="fa fa-globe fs-10" data-toggle="tooltip" data-placement="top" title="Public"></i> <br> <a href=" {%url 'post-detail' post.id%} " class="fs-10" >post-details</a> </p>
+                                </div>
+                                <div class="row">
+                                    {% if request.user == post.author.user %}
+                                        <a href="{% url 'post-update' post.pk %}"><button class="ui button bwhite-lg ">Update</button></a>
+                                        <a href="{% url 'post-delete' post.pk %}"><button class="ui button bwhite-lg ">Delete</button></a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <hr class="m-2">
+                        <div class="body row">
+                            <div class="details col ">
+                                <p class="px-3 " style="padding: 10px;" >{{ post.content }}</p>
+                            </div>
+                            {% if post.post_image %}
+                            <div class="image col-12 " >
+                                <div class="row pr-3 pt-3 pl-3 ">
+                                    <div class="col"style=" background: url('{{ post.post_image.url }}'); height: 350px;background-size: cover;background-position: top center;" > </div>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                        </div>
+                        <hr class="mt-0 mb-0">
+                        {{request.path}}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <h1>No posts of this user ...</h1>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

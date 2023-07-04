@@ -1,0 +1,159 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Web - Project</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" href="{% static 'blog/favicon.ico' %}">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!--Custom css-->
+    <!-- semantic UI -->
+    <link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="stylesheet" href="{% static 'blog/css/vendor/bootstrap.min.css' %} " >
+    <link rel="stylesheet" href="{% static 'blog/css/vendor/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/vendor/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/vendor/hamburgers.min.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/util.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/main.css' %}">
+</head>
+<body>
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-main">
+            <div class="container-fluid">
+                <div class="row">
+                    <nav class="navbar navbar-expand-lg navbar-light  bgwhite">
+                        <a class="navbar-brand ProjectColor" href="{% url 'blog-home' %}">WebProject</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item active">
+                                    <a class="nav-link fs-15" href="{% url 'blog-home' %}">Home <span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link fs-15" href="{% url 'profile' %}">Profile</a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link fs-15" href="{% url 'my-invites-view' %}">Friend requests</a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link fs-15" href="{% url 'all-profiles-view' %}">all users</a>
+                                </li>
+                                <li class="nav-item pt-2 pl-3">
+                                    <form action="search.html">
+                                        <input type="search" class="p-1 fs-14 pl-3 input-border"  placeholder="Search .. !">
+                                    </form>
+                                </li>
+                            </ul>
+                            <div class="form-inline my-2 my-lg-0">
+                                <ul class="navbar-nav mr-auto">
+                                    <li class="nav-item active">
+                                        <a class="nav-link fs-18" href="{% url 'blog-logout' %}" data-toggle="tooltip" data-placement="top" title="Log out !"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+                    {% block content %}
+                    {% endblock content %}
+                    {% block title %}
+                    {% endblock title %}
+                    {% block scripts %}
+                    {% endblock scripts %}
+
+                </div>
+            </div>
+        </div>
+    
+
+
+<script src=" {% static 'blog/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+<script src="{% static 'blog/js/vendor/jquery-3.3.1.slim.min.js' %}" ></script>
+<script src="{% static 'blog/js/vendor/popper.min.js' %}" ></script>
+<script src="{% static 'blog/js/vendor/bootstrap.min.js' %}"  ></script>
+<script src="{% static 'blog/js/vendor/tilt.jquery.min.js' %}"></script>
+<script src="{% static 'blog/js/plugins.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script >
+    $('.js-tilt').tilt({
+        scale: 1.1
+    })
+</script>
+
+<script src="{% static 'blog/js/main.js' %}"></script>
+<!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+<script>
+    window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+    ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
+</script>
+<script>
+    $( document ).ready(function() {
+        let display = false
+        $(".cmt_btn").click(function () {
+            if (display===false) {
+                $(this).next(".comment-box").show("slow");
+                display=true
+            } else {
+                $(this).next(".comment-box").hide("slow");
+                display=false
+            }  
+        });
+
+        $('.like-form').submit(function(e){
+            e.preventDefault()
+            
+            const post_id = $(this).attr('id')
+            
+            const likeText = $(`.like-btn${post_id}`).text()
+            const trim = $.trim(likeText)
+
+            const url = $(this).attr('action')
+            
+            let res;
+            const likes = $(`.like-count${post_id}`).text()
+            const trimCount = parseInt(likes)
+            
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {
+                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                    'post_id':post_id,
+                },
+                success: function(response) {
+                    if(trim === 'Unlike') {
+                        $(`.like-btn${post_id}`).text('Like')
+                        res = trimCount - 1
+                    } else {
+                        $(`.like-btn${post_id}`).text('Unlike')
+                        res = trimCount + 1
+                    }
+
+                    $(`.like-count${post_id}`).text(res)
+                },
+                error: function(response) {
+                    console.log('error', response)
+                }
+            })
+
+        })
+    });
+</script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://www.google-analytics.com/analytics.js" async defer></script>
+</body>
+</html>

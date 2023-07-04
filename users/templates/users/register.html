@@ -1,0 +1,148 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Web - Project</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" href="{% static 'blog/favicon.ico' %}">
+
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="stylesheet" href="{% static 'blog/css/vendor/bootstrap.min.css' %} " >
+    <link rel="stylesheet" href="{% static 'blog/css/vendor/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/vendor/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/vendor/hamburgers.min.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/util.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/main.css' %}">
+</head>
+<body>
+    <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+    <!-- Add your site or application content here -->
+
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100" style="padding-top:153px">
+                <div class="login100-pic js-tilt" data-tilt>
+                    <img src="{% static 'blog/img/img-01.png' %}" alt="IMG">
+                </div>
+                
+                <form class="login100-form validate-form" method = "POST" action="." id="register-form">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} " >
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% csrf_token %}
+                    <div class="messages" style="display: none ; margin:40px"> 
+                        <img class="message-icon" src="{% static 'blog/img/381599_error_icon.png' %}" alt="error" style=" width: 90px; padding-right: 20px; " > 
+                        <div class="message"> 
+                            <h3 class="message-title title">Error</h3> 
+                            <p class="message-paragraph">Something went wrong!</p> 
+                        </div> 
+                        <span class="message-close error">x</span> 
+                    </div>
+                    <span class="login100-form-title">
+                        Register
+                    </span>
+                    <div class="wrap-input100 validate-input" data-validate="fullname is required">
+                        
+                        {{ form.username|as_crispy_field }}
+                        
+                        
+                        <span class="symbol-input100">
+                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                        </span>
+                    </div>
+
+                    <div class="wrap-input100 " >
+                        {{form.email|as_crispy_field}}
+                        
+                        <span class="symbol-input100">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="Password is required">
+                        {{form.password1|as_crispy_field}}
+                        
+                        <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <div class="wrap-input100 validate-input" data-validate="Password is required">
+                        
+                        
+                            
+                            
+                        <span class="symbol-input100">
+                            
+                            {% if messages %}
+                            
+                            <i class="fa fa-lock" aria-hidden="true" style="padding-bottom: 60px;"></i>
+                            {% else %}
+                            <i class="fa fa-lock" aria-hidden="true" ></i>
+                            {% endif %}
+                
+                        </span>
+                        {{form.password2|as_crispy_field}}
+                    
+                    </div>
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn">
+                            Register
+                        </button>
+                    </div>
+
+                    <div class="text-center p-t-136">
+                        <a class="txt2" href="{% url 'blog-login' %}">
+                            Log in
+                            <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src=" {% static 'blog/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+    <script src="{% static 'blog/js/vendor/jquery-3.3.1.slim.min.js' %}" ></script>
+    <script src="{% static 'blog/js/vendor/popper.min.js' %}" ></script>
+    <script src="{% static 'blog/js/vendor/bootstrap.min.js' %}"  ></script>
+    <script src="{% static 'blog/js/vendor/tilt.jquery.min.js' %}"></script>
+    <script src="{% static 'blog/js/plugins.js' %}"></script>
+    <script src="{% static 'blog/js/scripts.js' %}"></script>
+
+    <script >
+        $('.js-tilt').tilt({
+            scale: 1.1
+        })
+    </script>
+    <script src="{% static 'blog/js/main.js' %}"></script>
+    <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+    <script>
+        window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+        ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
+    </script>
+    <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+ <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+</body>
+    </html>
+    

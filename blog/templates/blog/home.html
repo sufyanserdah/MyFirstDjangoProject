@@ -1,0 +1,368 @@
+{% extends "blog/base.html" %}
+ {% load static %}
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Web - Project</title>
+    <meta name="description" content="" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="icon" type="image/png" href="{% static 'blog/favicon.ico' %}" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!--Custom css-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <!-- semantic UI -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="{% static 'blog/js/vendor/jquery-3.7.0.js' %}"></script>
+
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <!-- Place favicon.ico in the root directory -->
+    <link
+      rel="stylesheet"
+      href="{% static 'blog/css/vendor/bootstrap.min.css' %} "
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'blog/css/vendor/font-awesome.min.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'blog/css/vendor/animate.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'blog/css/vendor/hamburgers.min.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'blog/css/util.css' %}" />
+    <link rel="stylesheet" href="{% static 'blog/css/normalize.css' %}" />
+    <link rel="stylesheet" href="{% static 'blog/css/main.css' %}" />
+  </head>
+  <body>
+
+    {% block content %}
+
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-sm-3 mobile-hidden">
+          <div class="main-block">
+            <div
+              class="coverPicture"
+              style="background: url('{{ user.profile.bgimage.url }}');"
+            ></div>
+            <div
+              class="profilePicture"
+              style="background: url('{{ user.profile.image.url }}');"
+            ></div>
+            <div class="FullName text-center fs-18 ProjectColor">
+              {{ user }}
+            </div>
+            <div class="row statistic text-center fs-16 p-3">
+              <div class="col">
+                <p>Friends</p>
+                <br />
+                <p>{{ profile.get_friends_no }}</p>
+              </div>
+              <div class="col border-left">
+                <p>Posts</p>
+                <br />
+                <p>{{ pos }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 mobile-hidden">
+          {% if post_added %}
+          <div class="ui green message">Post added</div>
+          {% endif %}
+          
+          <form
+            method="POST"
+            action=""
+            enctype="multipart/form-data"
+            id="post-form"
+          >
+        
+            {% csrf_token %} {{p_form.as_p}}
+            <div class="action p-2 pr-3">
+              <button
+                name="submit_p_form"
+                type="submit"
+                class="float-r p-2 fs-16 post"
+              >
+                save
+              </button>
+              <div class="clearfix"></div>
+            </div>
+          </form>
+        
+        
+          {% for post in posts %}
+            
+          <div class="main-block post-with-photo">
+            <div class="Post-Box">
+              <div class="header row">
+                <div class="col-2">
+                  <div class="pt-2 pl-2 d-inline-block">
+                    <div
+                      class="Profile-Picture"
+                      style="background: url('{{ post.author.image.url }}') "
+                    ></div>
+                  </div>
+                </div>
+                <div class="col-8 p-l-0">
+                  <div class="UserName d-inline-block mt-3">
+                    <p>
+                      <a href="{% url 'profile-detail-view' post.author.slug %}" class="font-weight-bold">{{ post.author.user }}</a>
+                    </p>
+                    <p class="lh-1-2">
+                     {{ post.date_posted|date:"F d, Y" }}
+                      <i
+                        class="fa fa-globe fs-10"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Public"
+                      ></i>
+                      <br />
+                      <a href=" {%url 'post-detail' post.id%} " class="fs-10"
+                        >post-details</a
+                      >
+                    </p>
+                  </div>
+                  <div class="row">
+                    {% if request.user == post.author.user %}
+                    <a href="{% url 'post-update' post.pk %}"
+                      ><button class="ui button bwhite-lg">Update</button></a
+                    >
+                    <a href="{% url 'post-delete' post.pk %}"
+                      ><button class="ui button bwhite-lg">Delete</button></a
+                    >
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <hr class="m-2" />
+              <div class="body row">
+                <div class="details col">
+                  <p class="px-3" style="padding: 10px">{{ post.content }}</p>
+                </div>
+                {% if post.post_image %}
+                <div class="image col-sm-12">
+                  <div class="row pr-3 pt-3 pl-3">
+                    <div
+                      class="col"
+                      style=" background: url('{{ post.post_image.url }}'); height: 350px;background-size: cover;background-position: top center;"
+                    ></div>
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+              <hr class="mt-0 mb-0" />
+              <div class="footer">
+                <div class="row action-btn">
+                  <div class="col">
+                    <form method="POST" action="{% url 'like-post-view' %}">
+                      {% csrf_token %}
+                      <input
+                        type="hidden"
+                        name="post_id"
+                        value="{{ post.id }}"
+                      />
+                      {% if profile not in post.liked.all %}
+                      <button
+                        style="
+                          background-color: transparent;
+                          border: none;
+                          box-shadow: none;
+                        "
+                        type="submit"
+                      >
+                        <p class="py-2 footer-btn" style="padding-left: 90px">
+                          <i class="fa fa-heart-o" aria-hidden="true"></i>
+                          <span class="px-1"> {{ post.num_likes }} Likes</span>
+                        </p>
+                      </button>
+                      {% else %}
+                      <button
+                        style="
+                          background-color: transparent;
+                          border: none;
+                          box-shadow: none;
+                        "
+                        type="submit"
+                      >
+                        <p class="py-2 footer-btn" style="padding-left: 90px">
+                          <i
+                            class="fa fa-heart-o"
+                            aria-hidden="true"
+                            style="color: red"
+                          ></i>
+                          <span class="px-1"> {{ post.num_likes }} Likes</span>
+                        </p>
+                      </button>
+                      {% endif %}
+                    </form>
+                  </div>
+                  <div class="col border-left">
+                    <p class="py-2 footer-btn text-center">
+                      <a href=""
+                        ><i class="fa fa-comment-o" aria-hidden="true"></i>
+                        <span class="px-1"> Comment</span></a
+                      >
+                    </p>
+                  </div>
+                </div>
+                <hr class="mt-0 mb-2" />
+                <div class="row comment-list">
+                  <div class="add-comment col-12 pb-2">
+                    <div class="row">
+                      <div class="col-2">
+                        <div class="pt-2 pl-2 d-inline-block">
+                          <div
+                            class="Profile-Picture-Comment"
+                            style="background: url('{{ user.profile.image.url }}'); "
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="comment-box col-10 pl-0">
+                        <div class="row pr-2 pt-2 pb-2 pl-0">
+                          <div class="col pl-0">
+                            <form
+                              method="POST"
+                              action=""
+                              enctype="multipart/form-data"
+                            >
+                              {% csrf_token %}
+                              <input
+                                type="hidden"
+                                name="post_id"
+                                value="{{post.id}}"
+                              />
+                              {{c_form}}
+                              <div class="action p-2 pr-3">
+                                <button
+                                  type="submit"
+                                  class="float-r p-2 fs-16 post"
+                                  name="submit_c_form"
+                                  style="width:100px"
+                                >
+                                  Comment
+                                </button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {% for c in post.comment_set.all %}
+                  <div class="comment col-12 pt-0">
+                    <div class="row">
+                      <div class="col-2">
+                        <div class="pt-2 pl-2 d-inline-block">
+                          <div
+                            class="Profile-Picture-Comment"
+                            style="background: url('{{ c.user.image.url }}'); "
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="comment-box col-10 pl-0">
+                        <div class="row pr-2 pt-2 pb-2 pl-0">
+                          <div class="col pl-0">
+                            <p class="pt-1 pl-2 pb-0 fs-14">{{c.body}}</p>
+                            <p class="p-0 pl-2 fs-10">
+                              <a href="" class="fs-10">Like </a> .
+                              <a href="" class="fs-10"> Comment </a> .
+                              <span class="fs-9">{{ c.created }}</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+          
+        
+        <div class="col-3 mobile-hidden">
+          <div class="main-block">
+            <div class="row">
+              <div class="col pl-4">
+                <p class="fs-14 font-cairo font-weight-600">
+                  People you may know
+                </p>
+              </div>
+            </div>
+            <hr class="m-1" />
+            {% for friend in nofriend %} 
+            {% if friend.user.username != user.username %}
+            <div class="row">
+              <div class="col-3">
+                <div class="pt-2 pl-2 d-inline-block">
+                  <div
+                    class="Profile-Picture"
+                    style="background: url('{{ friend.image.url }}');width: 40px;height: 40px;    border: 1.5px solid #8B54C7; "
+                  ></div>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="UserName d-inline-block mt-3">
+                  <p>
+                    <a href="{% url 'profile-detail-view' friend.slug %}" class="font-weight-bold">{{ friend.user }}</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <hr class="m-1" />
+            {% endif %} 
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endblock content %}
+
+    <script src=" {% static 'blog/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+    <script src="{% static 'blog/js/vendor/jquery-3.7.0.js' %}"></script>
+    <script src="{% static 'blog/js/vendor/popper.min.js' %}"></script>
+    <script src="{% static 'blog/js/vendor/bootstrap.min.js' %}"></script>
+    <script src="{% static 'blog/js/vendor/tilt.jquery.min.js' %}"></script>
+    <script src="{% static 'blog/js/plugins.js' %}"></script>
+    <script>
+      $(".js-tilt").tilt({
+        scale: 1.1,
+      });
+    </script>
+    <script src="{% static 'blog/js/main.js' %}"></script>
+    <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+    <script>
+      window.ga = function () {
+        ga.q.push(arguments);
+      };
+      ga.q = [];
+      ga.l = +new Date();
+      ga("create", "UA-XXXXX-Y", "auto");
+      ga("send", "pageview");
+    </script>
+
+    <script
+      src="https://www.google-analytics.com/analytics.js"
+      async
+      defer
+    ></script>
+  </body>
+</html>
