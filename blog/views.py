@@ -66,6 +66,7 @@ def home(request):
             instance.author = profile
             instance.save()
             p_form=PostModelForm()
+            
             post_added = True
     if 'submit_c_form' in request.POST:
 
@@ -108,6 +109,7 @@ def profile(request):
             instance.author = profile
             instance.save()
             p_form=PostModelForm()
+          
             post_added = True
     if 'submit_c_form' in request.POST:
 
@@ -183,3 +185,10 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
         else:
             form.add_error(None, "You need to be the author of the post in order to update it")
             return super().form_invalid(form)
+        
+# def add_post(request):
+#     name = request.POST.get()
+#     post = Post.objects.create(content=name)
+#     request.user.posts.add(post)
+#     posts = request.user.posts.all()
+#     return render(request,'blog/post-list.html',{'posts':posts})

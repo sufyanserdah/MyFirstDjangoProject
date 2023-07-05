@@ -10,6 +10,6 @@ urlpatterns = [
     # path('home/new/', views.home , name="blog-post"),
     path('liked/', views.like_unlike_post,name='like-post-view' ),
     path('<pk>/delete/', PostDeleteView.as_view(), name="post-delete"),
-        path('<pk>/update/', PostUpdateView.as_view(), name="post-update")
+    path('<pk>/update/', PostUpdateView.as_view(), name="post-update"),
 
 ]

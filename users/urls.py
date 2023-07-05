@@ -14,5 +14,10 @@ urlpatterns = [
     path('my-invites/accept/', views.accept_invatation, name="accept-invite"),
     path('my-invites//reject', views.reject_invatation, name="reject-invite"),
     path('<slug>/', views.ProfileDetailView.as_view(), name="profile-detail-view"),
+       path('check-username/', views.check_username, name='check-username'),
+  
 
 ]
+htmx_views=[
+]
+urlpatterns += htmx_views

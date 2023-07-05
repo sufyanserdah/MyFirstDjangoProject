@@ -73,8 +73,8 @@ class Profile(models.Model):
         for item in posts:
             total_liked += item.liked.all().count()
         return total_liked
-    def save(self):
-        super().save()
+    def save(self,*args,**kwargs):
+        super().save(*args , **kwargs)
         img = Image.open(self.image.path)
         if img.height > 300 or img.width>300:
             output_size=(300,300)

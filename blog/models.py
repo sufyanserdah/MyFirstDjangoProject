@@ -21,11 +21,12 @@ class Post(models.Model):
         return reverse("blog-home")
     def save(self):
         super().save()
-        img = Image.open(self.post_image.path)
-        if img.height > 300 or img.width>300:
-            output_size=(300,300)
-            img.thumbnail(output_size)
-            img.save(self.post_image.path)
+        if Post.post_image == None:
+            img = Image.open(self.post_image.path)
+            if img.height > 300 or img.width>300:
+                output_size=(300,300)
+                img.thumbnail(output_size)
+                img.save(self.post_image.path)
     class Meta:
         ordering = ('-created',)
 class Comment(models.Model):

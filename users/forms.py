@@ -3,6 +3,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView,LogoutView
+from django.urls import reverse_lazy
 from blog.models import Post
 from .models import Profile
 from crispy_forms.helper import FormHelper
@@ -21,8 +22,6 @@ class RegisterForm(UserCreationForm):
             "type":"text",
             "name":"fullname",
             "placeholder":"Full name",
-            
-            
         })
         self.fields["email"].widget.attrs.update({
             "class":"input100",
@@ -67,3 +66,4 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username','email','password1','password2']
+       

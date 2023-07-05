@@ -1,10 +1,11 @@
 from typing import Any, Dict
 from django.db.models.query import QuerySet
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-
+from django.contrib.auth import get_user_model
 from users.models import Profile, ProfileManager, Relationship
 
 from .forms import RegisterForm
@@ -99,6 +100,20 @@ def accept_invatation(request):
             rel.status = 'accepted'
             rel.save()
     return redirect('my-invites-view')
+
+def check_username(request):
+    print("fdsjklfjkls")
+    username = request.POST.get("username")
+    print('gfdjkl')
+    if get_user_model().objects.filter(username=username).exists():
+        print("fhjsdhgjlfd")
+        return HttpResponse("this username exists")
+    else:
+        print("fhjsdhgjlfd")
+        return HttpResponse("this username is availale")
+
+
+
 
 
 class ProfileDetailView(LoginRequiredMixin, DetailView):
