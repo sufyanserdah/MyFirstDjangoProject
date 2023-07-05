@@ -33,13 +33,13 @@
         <div class="wrap-main">
             <div class="container-fluid">
                 <div class="row">
-                    <nav class="navbar navbar-expand-lg navbar-light  bgwhite">
+                    <nav class="navbar navbar-expand-lg navbar-light  bgwhite" style="height: 150px;">
                         <a class="navbar-brand ProjectColor" href="{% url 'blog-home' %}">WebProject</a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
 
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="padding-top:3%">
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item active">
                                     <a class="nav-link fs-15" href="{% url 'blog-home' %}">Home <span class="sr-only">(current)</span></a>
@@ -54,11 +54,27 @@
                                     <a class="nav-link fs-15" href="{% url 'all-profiles-view' %}">all users</a>
                                 </li>
                                 <li class="nav-item pt-2 pl-3">
-                                    <form action="search.html">
-                                        <input type="search" class="p-1 fs-14 pl-3 input-border"  placeholder="Search .. !">
+                                    <form action="">
+                                    {% csrf_token %}
+                                        <input type="text" class="p-1 fs-14 pl-3 input-border"  placeholder="Search .. !" name="search" hx-post="{% url 'search-post' %}" hx-target="#results" hx-trigger="keyup changed delay:500ms" >
                                     </form>
+                                    
                                 </li>
+                                <div style="overflow-x: hidden;
+                    overflow-y: auto;
+                    text-align: center; height: 80px  ">
+
+                                    
+                        <ul>
+                            <li>
+                                <div id="results" style="overflow-x: hidden;
+                                overflow-y: auto;
+                                text-align: center;" ></div>
+                            </li>
+                        </ul></div>
                             </ul>
+                            
+                            
                             <div class="form-inline my-2 my-lg-0">
                                 <ul class="navbar-nav mr-auto">
                                     <li class="nav-item active">
@@ -66,8 +82,11 @@
                                     </li>
                                 </ul>
                             </div>
+                            
                         </div>
+                        
                     </nav>
+                    
                 </div>
             </div>
                     {% block content %}

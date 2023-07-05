@@ -1,0 +1,19 @@
+{% if results %}
+
+    {% csrf_token %}
+    <ul class="list-group col-xs-12">
+    {% for post in results %}
+        <li class="list-group-item d-flex justify-content-between align-items-center" style="
+        z-index: 999;">
+           <a href="{% url 'post-detail' post.pk %}"> {{ post.content }} </a>
+            <span class="badge badge-success badge-pill" 
+                style="cursor: pointer;"
+                hx-post="{% url 'all-profiles-view' %}"
+                hx-vals='{"postname": "{{post.content}}"}'
+                > <a href="{% url 'profile-detail-view' post.author.slug %}"> {{post.author.user}} </a>  </span>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No search results</p>
+{% endif %}

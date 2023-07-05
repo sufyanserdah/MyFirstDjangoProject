@@ -138,6 +138,17 @@ def profile(request):
     
     return render(request, 'blog/profile.html',context)
 
+
+
+def search_post(request):
+    search_text = request.POST.get('search')
+    if search_text == '':
+        return render(request,'blog/search-results.html')
+
+    results = Post.objects.filter(content__icontains=search_text)
+    context = {'results':results}
+    return render(request,'blog/search-results.html',context)
+
 class AddPostView(CreateView, LoginRequiredMixin, UserPassesTestMixin):
     model = Post
     template_name = 'blog/home.html'
