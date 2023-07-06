@@ -1,14 +1,18 @@
 from typing import Any, Dict
+import uuid
 from django.db.models.query import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth import get_user_model
 from users.models import Profile, ProfileManager, Relationship
-
+from .helpers import send_forget_password_mail
 from .forms import RegisterForm
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.views import PasswordChangeView
+from .validators import *
 from django.views.generic import (
     ListView,
     DetailView,
@@ -54,6 +58,7 @@ def register(request):
         
     }    
     return render(request,'users/register.html',context)
+
 @logout_required
 def login_user(request):
     
@@ -78,10 +83,13 @@ def login_user(request):
                 messages.warning(request,"Invalid Login, Username does not exist")
             
             else:
-                
+                try:
+                    user =  User.objects.get(password=password)
+                except:
+                    messages.warning(request,"Wrong password")
 
             
-                messages.warning(request,"Invalid Login, please check your username and password")
+                # messages.warning(request,"Invalid Login, please check your username and password")
             
             return redirect('blog-login')
 
@@ -101,29 +109,85 @@ def accept_invatation(request):
             rel.save()
     return redirect('my-invites-view')
 
-def check_username(request):
-    print("fdsjklfjkls")
-    username = request.POST.get("username")
-    print('gfdjkl')
-    if get_user_model().objects.filter(username=username).exists():
-        print("fhjsdhgjlfd")
-        return HttpResponse("this username exists")
-    else:
-        print("fhjsdhgjlfd")
-        return HttpResponse("this username is availale")
+
+        
 
 
 
+def ForgetPassword(request):
+    print('hello')
+    try:
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            
+            if not User.objects.filter(username=username).first():
+                messages.success(request, 'Not user found with this username.')
+                return redirect('forget_password')
+            
+            user_obj = User.objects.get(username = username)
+            token = str(uuid.uuid4())
+            print(token)
+            profile_obj= Profile.objects.get(user = user_obj)
+            profile_obj.forget_password_token = token
+            profile_obj.save()
+            print({user_obj.email})
+            send_forget_password_mail(user_obj.email , token)
+            
+            messages.success(request, 'An email is sent.')
+            return redirect('forget_password')
+                
+    
+    
+    except Exception as e:
+        print(e)
+    return render(request , 'users/forget-password.html')
 
 
+
+def ChangePassword(request , token):
+    context = {}
+    
+    
+    try:
+        profile_obj = Profile.objects.filter(forget_password_token = token).first()
+        context = {'user_id' : profile_obj.user.id}
+        
+        if request.method == 'POST':
+            new_password = request.POST.get('new_password')
+            confirm_password = request.POST.get('reconfirm_password')
+            user_id = request.POST.get('user_id')
+            
+            if user_id is  None:
+                messages.success(request, 'No user id found.')
+                return redirect(f'/change-password/{token}/')
+                
+            
+            if  new_password != confirm_password:
+                messages.success(request, 'both should  be equal.')
+                return redirect(f'/change-password/{token}/')
+                         
+    
+            user_obj = User.objects.get(id = user_id)
+            UppercaseValidator().validate(new_password)
+            NumberValidator().validate(new_password)
+            SymbolValidator().validate(new_password)
+            RepeatedValidator().validate(new_password)
+            user_obj.set_password(new_password)
+            user_obj.save()
+            return redirect('blog-login')
+            
+            
+            
+        
+        
+    except Exception as e:
+        print(e)
+    
+    return render(request , 'users/change-password.html' , context)
 class ProfileDetailView(LoginRequiredMixin, DetailView):
     model = Profile
     template_name = 'users/detail.html'
 
-    # def get_object(self):
-    #     slug = self.kwargs.get('slug')
-    #     profile = Profile.objects.get(slug=slug)
-    #     return profile
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

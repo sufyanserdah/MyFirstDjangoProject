@@ -1,3 +1,4 @@
+from django import http
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
@@ -77,6 +78,7 @@ def home(request):
             instance.user = profile
             instance.post = Post.objects.get(id=request.POST.get('post_id'))
             instance.save()
+            
             c_form = CommentModelForm()   
     context = {
         'posts':Post.objects.all().order_by('-date_posted'),

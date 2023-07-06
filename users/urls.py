@@ -2,6 +2,7 @@ from . import views
 from django.urls import path
 
 from django.contrib.auth.views import LoginView,LogoutView
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', views.register,name="blog-register"),
@@ -13,11 +14,8 @@ urlpatterns = [
     path('remove-friend/', views.remove_from_friends, name="remove-friend"),
     path('my-invites/accept/', views.accept_invatation, name="accept-invite"),
     path('my-invites//reject', views.reject_invatation, name="reject-invite"),
+    path('forgot/forget-password/',views.ForgetPassword,name="forget_password"),
+    path('change-password/<token>/', views.ChangePassword,name="change_password"),
     path('<slug>/', views.ProfileDetailView.as_view(), name="profile-detail-view"),
-       path('check-username/', views.check_username, name='check-username'),
-  
-
+   
 ]
-htmx_views=[
-]
-urlpatterns += htmx_views

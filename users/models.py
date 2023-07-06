@@ -38,6 +38,7 @@ class Profile(models.Model):
     bgimage = models.ImageField(default='default.jpg', upload_to='bg_pics')
     friends = models.ManyToManyField(User, blank=True, related_name='friends')
     slug = models.SlugField(unique=True,default=uuid.uuid1)
+    forget_password_token= models.CharField(max_length=100)
     updated = models.DateTimeField( auto_now=True)
     created = models.DateTimeField( auto_now_add=True)
     objects = ProfileManager()
