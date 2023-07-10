@@ -7,7 +7,7 @@ urlpatterns = [
     
     path('logout/', user_view.LogoutView.as_view(), name="blog-logout"),
     path('profile/',views.profile,name="profile"),
-    path('post/<int:pk>/', PostDetailView.as_view(),name='post-detail'),
+    path('post/<int:pk>/', views.details ,name='post-detail'),
     # path('home/new/', views.home , name="blog-post"),
     path('liked/', views.like_unlike_post,name='like-post-view' ),
 

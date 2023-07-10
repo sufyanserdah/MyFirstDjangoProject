@@ -60,6 +60,7 @@ class Profile(models.Model):
 
     def get_all_authors_posts(self):
         return self.posts.all()
+    
 
     def get_likes_given_no(self):
         likes = self.like_set.all()

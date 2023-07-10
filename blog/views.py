@@ -181,6 +181,56 @@ class AddPostView(CreateView, LoginRequiredMixin, UserPassesTestMixin):
     
 class PostDetailView(DetailView,LoginRequiredMixin):
     model = Post
+
+@login_required          
+def details(request,pk):
+    ordering =['-date_posted']
+    profile = Profile.objects.get(user = request.user)
+    nopro = Profile.objects.exclude(user = request.user)
+    print(pk)
+    post_id = request.POST.get('post_id')
+    post_obj = Post.objects.get(id = post_id)
+    a = Profile.objects.all()
+    
+    a = set(a)
+    
+    b = set(profile.get_friends2())
+    c = a.difference(b)
+    print( type(a) )
+    print(type(b))
+    print(type(c))
+    print(a)
+    print(b)
+    print(c)
+   
+    c_form = CommentModelForm( )
+    post_added=False
+    
+    if 'submit_c_form' in request.POST:
+
+        c_form = CommentModelForm(request.POST )
+
+        if c_form.is_valid():
+            instance = c_form.save(commit=False)
+            instance.user = profile
+            instance.post = Post.objects.get(id=request.POST.get('post_id'))
+            instance.save()
+            
+            c_form = CommentModelForm()   
+    context = {
+        'posts':Post.objects.all().order_by('-date_posted'),
+        'user': request.user,
+        'pos': profile.get_posts_no,
+        'im': Profile.objects.filter(user= request.user),
+        'profile':profile,
+        'friends': profile.get_friends(),
+        'nofriend': c,
+        'c_form':c_form,
+        'post_added':post_added,
+        'post_id':post_id,
+        'post':post_obj,
+    }
+    return render(request, 'blog/post_detail.html', context)
     
 class AddPostView(CreateView, LoginRequiredMixin, UserPassesTestMixin):
     model = Post

@@ -22,6 +22,16 @@ class PostModelForm(forms.ModelForm):
             
             
         })
+        self.fields["post_image"].help_text = None
+        self.fields['post_image'].label = ""
+        self.fields["post_image"].widget.attrs.update({
+           
+            "type":"submit",
+            "class":"float-r p-2 fs-16 post",         
+            "text":"",
+            
+        })
+        
     class Meta:
         model = Post
         fields=('content','post_image')
