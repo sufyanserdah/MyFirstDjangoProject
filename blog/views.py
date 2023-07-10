@@ -50,10 +50,17 @@ def home(request):
     nopro = Profile.objects.exclude(user = request.user)
     
     a = Profile.objects.all()
+    
     a = set(a)
     
-    b = profile.get_friends()
+    b = set(profile.get_friends2())
     c = a.difference(b)
+    print( type(a) )
+    print(type(b))
+    print(type(c))
+    print(a)
+    print(b)
+    print(c)
     p_form = PostModelForm()
     c_form = CommentModelForm( )
     post_added=False

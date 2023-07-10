@@ -168,10 +168,26 @@ def ChangePassword(request , token):
                          
     
             user_obj = User.objects.get(id = user_id)
-            UppercaseValidator().validate(new_password)
-            NumberValidator().validate(new_password)
-            SymbolValidator().validate(new_password)
-            RepeatedValidator().validate(new_password)
+            if LengthValidator().validate(new_password):
+                messages.warning(request, "The password must contain at least 9 charachters: ")
+                return redirect(f'/change-password/{token}/')
+            if UppercaseValidator().validate(new_password):
+                messages.warning(request, 'The password must contain at least 1 uppercase letter, A-Z.')
+                return redirect(f'/change-password/{token}/')
+           
+            if  NumberValidator().validate(new_password):
+                messages.warning(request, 'The password must contain at least 1 digit, 0-9.')
+                return redirect(f'/change-password/{token}/')    
+                
+            
+            if SymbolValidator().validate(new_password):
+                messages.warning(request, "The password must contain at least 1 special character: " +
+                  "()[]{}|\`~!@#$%^&*_-+=;:'\",<>./?")
+                return redirect(f'/change-password/{token}/')
+           
+            if RepeatedValidator().validate(new_password):
+                messages.warning(request, 'The password cannot be the same as previously used passwords.')
+                return redirect(f'/change-password/{token}/')
             user_obj.set_password(new_password)
             user_obj.save()
             return redirect('blog-login')
