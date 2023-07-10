@@ -19,7 +19,7 @@ from django.views.generic import (
     View,
 )
 from .forms import ProfileModelForm,PostModelForm,CommentModelForm
-
+from django.http import HttpResponseRedirect
 @login_required
 def like_unlike_post(request):
     user = request.user
@@ -41,7 +41,29 @@ def like_unlike_post(request):
             like.save()
         else:
             like.value='Like'
-    return redirect('blog-home')        
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))    
+@login_required
+def like_unlike_comment(request):
+    user = request.user
+    if request.method == 'POST':
+        post_id = request.POST.get('post_id')
+        post_obj = Post.objects.get(id = post_id)
+        profile = Profile.objects.get(user=user)
+        if profile in post_obj.liked.all():
+            post_obj.liked.remove(profile)
+        else:
+            post_obj.liked.add(profile)
+        like,created=Like.objects.get_or_create(user=profile,post_id=post_id)
+        if not created:
+            if like.value=='Like':
+                like.value='Unlike'
+            else:
+                like.value='Like'
+            post_obj.save()
+            like.save()
+        else:
+            like.value='Like'
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))   
                 
 @login_required          
 def home(request):
@@ -135,10 +157,19 @@ def profile(request):
             form.save()
             confirm = True
     context ={
+        'posts':profile.get_all_authors_posts() ,
+        'user': request.user,
+        'im': Profile.objects.filter(user= request.user),
+        'profile':profile,
+        'friends': profile.get_friends(),
+        'p_form':p_form,
+        'c_form':c_form,
+        'post_added':post_added,
+        'pos': profile.get_posts_no,
         'profile':profile,
         'form':form,
         'confirm':confirm,
-                'friends': profile.get_friends(),
+        'friends': profile.get_friends(),
         
         'p_form':p_form,
         'c_form':c_form,

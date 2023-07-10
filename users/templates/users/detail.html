@@ -2,7 +2,7 @@
 
 
 {% block content %}
-<div class="ui grid">
+<div class="ui grid" style="padding-left: 5%;">
     <br>
     <div class="row">
         <div class="four wide column">
@@ -50,48 +50,8 @@
         </div>
         <div class="twelve wide column">
             {% if len_posts %}
-                {% for post in posts %}
-                <div class="main-block post-with-photo">
-                    <div class="Post-Box">
-                        <div class="header row ">
-                            <div class="col-2">
-                                <div class=" pt-2 pl-2    d-inline-block">
-                                    <div class="Profile-Picture " style="background: url('{{ post.author.image.url }}') "></div>
-                                </div>
-                            </div>
-                            <div class="col-8 p-l-0">
-                                <div class="UserName d-inline-block mt-3">
-                                    <p><a href="#" class="font-weight-bold">{{ post.author }}</a></p>
-                                    <p class="lh-1-2"><a href="" class="fs-10">{{ post.date_posted|date:"F d, Y" }}</a> <i class="fa fa-globe fs-10" data-toggle="tooltip" data-placement="top" title="Public"></i> <br> <a href=" {%url 'post-detail' post.id%} " class="fs-10" >post-details</a> </p>
-                                </div>
-                                <div class="row">
-                                    {% if request.user == post.author.user %}
-                                        <a href="{% url 'post-update' post.pk %}"><button class="ui button bwhite-lg ">Update</button></a>
-                                        <a href="{% url 'post-delete' post.pk %}"><button class="ui button bwhite-lg ">Delete</button></a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <hr class="m-2">
-                        <div class="body row">
-                            <div class="details col ">
-                                <p class="px-3 " style="padding: 10px;" >{{ post.content }}</p>
-                            </div>
-                            {% if post.post_image %}
-                            <div class="image col-12 " >
-                                <div class="row pr-3 pt-3 pl-3 ">
-                                    <div class="col"style=" background: url('{{ post.post_image.url }}'); height: 350px;background-size: cover;background-position: top center;" > </div>
-                                </div>
-                            </div>
-                            {% endif %}
-
-                        </div>
-                        <hr class="mt-0 mb-0">
-                        {{request.path}}
-                    </div>
-                </div>
-                {% endfor %}
+                {% include 'users/post-list2.html' %}
+                
             {% else %}
                 <h1>No posts of this user ...</h1>
             {% endif %}

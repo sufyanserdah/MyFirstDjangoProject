@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth import get_user_model
+from blog.forms import CommentModelForm, PostModelForm, ProfileModelForm
 from users.models import Profile, ProfileManager, Relationship
 from .helpers import send_forget_password_mail
 from .forms import RegisterForm
@@ -203,16 +204,37 @@ def ChangePassword(request , token):
 class ProfileDetailView(LoginRequiredMixin, DetailView):
     model = Profile
     template_name = 'users/detail.html'
-
+    
+    # context ={
+    #     'posts':profile.get_all_authors_posts() ,
+    #     'user': request.user,
+    #     'im': Profile.objects.filter(user= request.user),
+    #     'profile':profile,
+    #     'friends': profile.get_friends(),
+    #     'p_form':p_form,
+    #     'c_form':c_form,
+    #     'post_added':post_added,
+    #     'pos': profile.get_posts_no,
+    #     'profile':profile,
+    #     'form':form,
+    #     'confirm':confirm,
+    #     'friends': profile.get_friends(),
+        
+    #     'p_form':p_form,
+    #     'c_form':c_form,
+    #     'post_added':post_added,
+    # }
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = User.objects.get(username__iexact=self.request.user)
         profile = Profile.objects.get(user=user)
+        
         rel_r = Relationship.objects.filter(sender=profile)
         rel_s = Relationship.objects.filter(receiver=profile)
         rel_receiver = []
         rel_sender = []
+        
         for item in rel_r:
             rel_receiver.append(item.receiver.user)
         for item in rel_s:
@@ -221,6 +243,10 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
         context["rel_sender"] = rel_sender
         context['posts'] = self.get_object().get_all_authors_posts()
         context['len_posts'] = True if len(self.get_object().get_all_authors_posts()) > 0 else False
+        context['profile'] = profile
+        
+        context['user'] = user
+        
         return context
 
 @login_required

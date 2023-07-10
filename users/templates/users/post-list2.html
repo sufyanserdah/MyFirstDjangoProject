@@ -3,7 +3,7 @@
           <div class="main-block post-with-photo" id="post-list">
             <div class="Post-Box">
               <div class="header row">
-                <div class="col-1" style="padding-right: 15%;">
+                <div class="col-1" style="padding-right: 10%;">
                   <div class="pt-2 pl-2 d-inline-block">
                     <div
                       class="Profile-Picture"
@@ -14,7 +14,6 @@
                 <div class="col-8 p-l-0">
                   <div class="UserName d-inline-block mt-3">
                     <p>
-                      <a href="{% url 'profile-detail-view' post.author.slug %}" class="font-weight-bold">{{ post.author.user }}</a>
                     </p>
                     <p class="lh-1-2">
                      {{ post.date_posted|date:"F d, Y" }}
@@ -49,10 +48,10 @@
                 </div>
                 {% if post.post_image %}
                 <div class="image col-sm-12">
-                  <div style="height:100%" >
+                  <div class="row pr-3 pt-3 pl-3">
                     <div
-                      
-                      style=" background: url('{{ post.post_image.url }}'); height:500px ;background-size: cover;background-position: top center;"
+                      class="col"
+                      style=" background: url('{{ post.post_image.url }}'); height: 350px;background-size: cover;background-position: top center;"
                     ></div>
                   </div>
                 </div>
@@ -118,7 +117,7 @@
                   {% for c in post.comment_set.all %}
                   <div class="add-comment col-12 pt-0">
                     <div class="row">
-                      <div class="col-1" style="padding-right: 12%;">
+                      <div class="col-1" style="padding-right: 7%;">
                         <div class="pt-2 pl-2 d-inline-block">
                           <div
                             class="Profile-Picture-Comment"
@@ -141,47 +140,7 @@
                     </div>
                   </div>
                   {% endfor %}
-                  <div class="add-comment col-12 pb-2">
-                    <div class="row">
-                      <div class="col-1" style="padding-right: 12%;">
-                        <div class="pt-2 pl-2 d-inline-block">
-                          <div
-                            class="Profile-Picture-Comment"
-                            style="background: url('{{ user.profile.image.url }}'); "
-                          ></div>
-                        </div>
-                      </div>
-                      <div class="comment-box col-10 pl-0">
-                        <div class="row pr-2 pt-2 pb-2 pl-0">
-                          <div class="col pl-0">
-                            <form
-                              method="POST"
-                              action=""
-                              enctype="multipart/form-data"
-                            >
-                              {% csrf_token %}
-                              <input
-                                type="hidden"
-                                name="post_id"
-                                value="{{post.id}}"
-                              />
-                              {{c_form}}
-                              <div class="action p-2 pr-3">
-                                <button
-                                  type="submit"
-                                  class="float-r p-2 fs-16 post"
-                                  name="submit_c_form"
-                                  style="width:100px"
-                                >
-                                  Comment
-                                </button>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  
 
                   
                 </div>
