@@ -33,6 +33,8 @@ class Comment(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     body = models.TextField(max_length=300)
+    liked = models.ManyToManyField(Post, blank=True, related_name='likes')
+
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -54,4 +56,4 @@ class Like(models.Model):
     def __str__(self):
         return f"{self.user}-{self.post}-{self.value}"
 
-    
+   

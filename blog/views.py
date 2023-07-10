@@ -2,7 +2,7 @@ from django import http
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
-from .models import Post,Like
+from .models import Comment, Post,Like
 from users.models import Profile
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
@@ -42,29 +42,7 @@ def like_unlike_post(request):
         else:
             like.value='Like'
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))    
-@login_required
-def like_unlike_comment(request):
-    user = request.user
-    if request.method == 'POST':
-        post_id = request.POST.get('post_id')
-        post_obj = Post.objects.get(id = post_id)
-        profile = Profile.objects.get(user=user)
-        if profile in post_obj.liked.all():
-            post_obj.liked.remove(profile)
-        else:
-            post_obj.liked.add(profile)
-        like,created=Like.objects.get_or_create(user=profile,post_id=post_id)
-        if not created:
-            if like.value=='Like':
-                like.value='Unlike'
-            else:
-                like.value='Like'
-            post_obj.save()
-            like.save()
-        else:
-            like.value='Like'
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))   
-                
+
 @login_required          
 def home(request):
     ordering =['-date_posted']

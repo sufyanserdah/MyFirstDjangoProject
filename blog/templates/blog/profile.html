@@ -37,7 +37,7 @@
                 <div class="row">
                     <div class="col ">
                         <div class="main-block">
-                            <div class="coverPicture" style="background: url('{{ user.profile.bgimage.url }}');"></div>
+                            <div class="coverPicture" style="background: url('{{ user.profile.bgimage.url }}'); height:300px;"></div>
                             <div class="profilePicture" style="background: url('{{ user.profile.image.url }}');"></div>
                             <div class="FullName text-center  fs-18 ProjectColor ">
                                 {{ user.username }}
@@ -48,8 +48,24 @@
                             </div>
                             
                         </div>
+                        <h1>Change your profile picture and cover picture</h1>
+                        <br><br>
+                        <form action="" method="POST" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          {{form.as_p}}
+                          <button
+     
+                type="submit"
+                class="float-r p-2 fs-16 post"
+              >
+                save
+              </button>
+              <br>
+                        </form>
+                        <br>
+                        
                     </div>
-
+                    
                 </div>
                
                 {% include 'blog/user-post-list.html' %}
