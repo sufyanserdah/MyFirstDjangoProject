@@ -48,21 +48,29 @@
                 </div>
               </div>
               <hr class="m-2" />
-              <div class="body row">
+              
                 <div class="details col">
                   <p class="px-3" style="padding: 10px">{{ post.content }}</p>
+                  
                 </div>
+                
+                
                 {% if post.post_image %}
-                <div class="image col-sm-12">
-                  <div class="row pr-3 pt-3 pl-3">
+                 
+                  
                     <div
                       class="col"
-                      style=" background: url('{{ post.post_image.url }}'); height: 350px;background-size: cover;background-position: top center;"
-                    ></div>
-                  </div>
+                      style="width: auto;  
+                      text-align: center;"
+                      
+                    >
+                    <img src="{{ post.post_image.url }}" alt="" style=" max-width: 50%;  
+                    height: auto;">
                 </div>
+                  
+                
                 {% endif %}
-              </div>
+              
               <hr class="mt-0 mb-0" />
               <div class="footer">
                 <div class="row action-btn">
@@ -136,8 +144,7 @@
                           <div class="col pl-0">
                             <p class="pt-1 pl-2 pb-0 fs-14">{{c.body}}</p>
                             <p class="p-0 pl-2 fs-10">
-                              <a href="" class="fs-10">Like </a> .
-                              <a href="" class="fs-10"> Comment </a> .
+                             
                               <span class="fs-9">{{ c.created }}</span>
                             </p>
                           </div>

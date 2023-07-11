@@ -32,7 +32,7 @@ class Post(models.Model):
 class Comment(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    body = models.TextField(max_length=300)
+    body = models.CharField(max_length=300)
     liked = models.ManyToManyField(Post, blank=True, related_name='likes')
 
     updated = models.DateTimeField(auto_now=True)

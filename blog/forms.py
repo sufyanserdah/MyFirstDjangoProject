@@ -5,6 +5,7 @@ from typing import Any
 from users.models import Profile
 from .models import Post,Comment
 class PostModelForm(forms.ModelForm):
+    
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -24,17 +25,13 @@ class PostModelForm(forms.ModelForm):
         })
         self.fields["post_image"].help_text = None
         self.fields['post_image'].label = ""
-        self.fields["post_image"].widget.attrs.update({
-           
-            "type":"submit",
-            "class":"float-r p-2 fs-16 post",         
-            "text":"",
-            
-        })
+        
         
     class Meta:
         model = Post
         fields=('content','post_image')
+       
+        
 class ProfileModelForm(forms.ModelForm):
     class Meta:
         model = Profile
@@ -47,8 +44,8 @@ class CommentModelForm(forms.ModelForm):
         self.fields["body"].help_text = None
         self.fields['body'].label = ""
         self.fields["body"].widget.attrs.update({
-            "class":"p-2 ",
-            "style":"height: 75px;resize: none;color: #666666;    border-radius: 5px; border-style:solid;",
+            "class":"p-2 fs-14 pl-3",
+            # "style":"height: 75px;resize: none;color: #666666;    border-radius: 5px; border-style:solid;",
 
             "type":"text",
             "name":"fullname",

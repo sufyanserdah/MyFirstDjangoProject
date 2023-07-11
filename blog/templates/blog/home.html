@@ -82,7 +82,7 @@
           {% if post_added %}
           <div class="ui green message">Post added</div>
           {% endif %}
-          
+          <div style="background-color: white; padding-bottom: 7%; margin-bottom: 3%;">
           <form
             method="POST"
             action=""
@@ -91,8 +91,10 @@
           >
         
             {% csrf_token %}
-
+            
             {{p_form.as_p}}
+            
+            <hr>
             <div class="action p-2 pr-3">
               <button
               
@@ -102,10 +104,10 @@
               >
                 save
               </button>
-              <div class="clearfix"></div>
             </div>
+            
           </form>
-        
+        </div>
         
           {% include 'blog/post-list.html' %}
         </div>

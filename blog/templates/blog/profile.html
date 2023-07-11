@@ -1,6 +1,7 @@
+<!doctype html>
 {% extends "blog/base.html" %}
 {% load static %}
-<!doctype html>
+
 <html class="no-js" lang="en">
 <head>
     <meta charset="utf-8">
@@ -48,8 +49,8 @@
                             </div>
                             
                         </div>
+                        <div>
                         <h1>Change your profile picture and cover picture</h1>
-                        <br><br>
                         <form action="" method="POST" enctype="multipart/form-data">
                           {% csrf_token %}
                           {{form.as_p}}
@@ -60,9 +61,8 @@
               >
                 save
               </button>
-              <br>
                         </form>
-                        <br>
+                      </div>
                         
                     </div>
                     
