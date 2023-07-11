@@ -70,8 +70,8 @@ def login_user(request):
         try:
             user = authenticate(request, username=User.objects.get(email = username), password = password)
         except:
-            user = authenticate(request, username=username, password = password)
-    
+            user = None
+            
         
         if user is not None:
             login(request,user)
@@ -79,9 +79,9 @@ def login_user(request):
         else:
             
             try:
-                user = User.objects.get(username=username)
+                user = User.objects.get(username=User.objects.get(email = username))
             except User.DoesNotExist:
-                messages.warning(request,"Invalid Login, Username does not exist")
+                messages.warning(request,"Invalid Login, Email does not exist")
             
             else:
                 try:
