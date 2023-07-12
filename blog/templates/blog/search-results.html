@@ -218,6 +218,132 @@
               </div>
             </div>
             {% endfor %}
+
+            <div>
+              {% if is_empty %}
+        <div id="notfound" style="position: relative; height: 100vh">
+  <div
+    class="notfound"
+    style="
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    "
+  >
+    <div
+      class="notfound-404"
+      style="
+        position: relative;
+        height: 200px;
+        margin: 0px auto 20px;
+        z-index: -1;
+      "
+    >
+      <h1
+        style="
+          font-family: 'Montserrat', sans-serif;
+          font-size: 236px;
+          font-weight: 200;
+          margin: 0px;
+          color: #211b19;
+          text-transform: uppercase;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+        "
+      >
+        Oops!
+      </h1>
+      <h2
+        style="
+          font-family: 'Montserrat', sans-serif;
+          font-size: 28px;
+          font-weight: 400;
+          text-transform: uppercase;
+          color: #211b19;
+          background: #fff;
+          padding: 10px 5px;
+          margin: auto;
+          display: inline-block;
+          position: absolute;
+          bottom: 0px;
+          left: 0;
+          right: 0;
+          width: 235%;
+    margin-left: -61%;
+        "
+      >
+        There are currently no users 
+      </h2>
+    </div>
+    <div class="container-login100-form-btn">
+        <a href="{% url 'blog-home' %}">
+                            <button class="login100-form-btn">
+                                Back to HomePage
+                            </button></a>
+                        </div>
+   
+    
+  </div>
+</div>
+    
+    {% endif %}
+
+    {% for user in users %}
+        <div class="ui segment" style="margin:20px">
+            <div class="ui grid" >
+                <div class="row" style="padding: 20px;margin:20px">
+                    
+                    <div class="three wide column">
+                        <img class="ui small circular image" src="{{user.profile.image.url}}">
+                    </div>
+                    
+                    <div class="thirteen wide column" >
+                        <span class="login100-form-title animated" style="display: inline;   padding-left: 1%;  line-height: 2;">
+						{{user}}
+					</span>
+                        
+                        <div class="container-login100-form-btn" style="justify-content: left;">
+                             <a href="{{user.profile.get_absolute_url}}">
+                            <button class="login100-form-btn">
+                                See profile
+                            </button></a>
+                        </div>
+                        <br>
+                        
+
+                        {% if user not in rel_receiver and user not in rel_sender %}
+                            <form action=" {% url 'send-invite' %} " method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="profile_pk" value="{{user.pk}}">
+                                <button type="submit" class="ui positive basic button mb-5 w-big"><i class="plus square icon"></i>Add to friends</button>
+                            </form>
+                         {% endif %}
+
+                        {% if user in rel_receiver and request.user not in user.profile.friends.all %}
+                            <button class="ui disabled button mb-5 w-big"><i class="user icon"></i>Waiting for approval</button>
+                        {% endif %}
+
+                        {% if request.user in user.profile.friends.all %}
+                        <form action="{% url 'remove-friend' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="profile_pk" value="{{user.pk}}">
+                            <button type="submit" class="ui negative basic button mb-5 w-big"><i class="minus square icon"></i>Remove from friends</button>
+                        </form>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+            </div>
         </div>
           
         

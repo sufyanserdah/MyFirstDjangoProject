@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
 from .models import Comment, Post, Like
-from users.models import Profile
+from users.models import Profile, Relationship
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -162,15 +162,18 @@ def profile(request):
 
 
 def search_post(request):
+    
     if request.method == "POST":
         searched = request.POST['searched']
         posts= Post.objects.filter(content__icontains=searched)
-        # users = Profile.objects.filter(user__icontains=searched)
+        users = User.objects.filter(username__icontains=searched )
+        
+            
         for post in posts:
             print(post.content)
 
     
-        context = {"posts": posts ,"searched":searched}
+        context = {"posts": posts ,"searched":searched, 'users':users}
         return render(request, "blog/search-results.html", context)
     
     return render(request, "blog/search-results.html")
