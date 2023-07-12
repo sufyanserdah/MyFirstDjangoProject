@@ -51,9 +51,9 @@
         <p class="px-3" style="padding: 10px">{{ post.content }}</p>
       </div>
       {% if post.post_image %}
-      <div class="image col-sm-12">
-        <div height="{{ post.post_image.width }}">
-          <div
+      <div class="image col-12">
+        <div  class="row pr-3 pt-3 pl-3 ">
+          <div class="col"
             style=" background: url('{{ post.post_image.url }}'); height:500px ;background-size: cover;background-position: top center;"
           ></div>
         </div>
