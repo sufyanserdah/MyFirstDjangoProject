@@ -162,13 +162,18 @@ def profile(request):
 
 
 def search_post(request):
-    search_text = request.POST.get("search")
-    if search_text == "":
-        return render(request, "blog/search-results.html")
+    if request.method == "POST":
+        searched = request.POST['searched']
+        posts= Post.objects.filter(content__icontains=searched)
+        # users = Profile.objects.filter(user__icontains=searched)
+        for post in posts:
+            print(post.content)
 
-    results = Post.objects.filter(content__icontains=search_text)
-    context = {"results": results}
-    return render(request, "blog/search-results.html", context)
+    
+        context = {"posts": posts ,"searched":searched}
+        return render(request, "blog/search-results.html", context)
+    
+    return render(request, "blog/search-results.html")
 
 
 class AddPostView(CreateView, LoginRequiredMixin, UserPassesTestMixin):
@@ -191,24 +196,13 @@ class PostDetailView(DetailView, LoginRequiredMixin):
 @login_required
 def details(request, pk):
     ordering = ["-date_posted"]
+    post = Post.objects.filter(pk=pk)
     profile = Profile.objects.get(user=request.user)
     nopro = Profile.objects.exclude(user=request.user)
     print(pk)
-    post_id = request.POST.get("post_id")
-    post_obj = Post.objects.get(id=post_id)
-    a = Profile.objects.all()
-
-    a = set(a)
-
-    b = set(profile.get_friends2())
-    c = a.difference(b)
-    print(type(a))
-    print(type(b))
-    print(type(c))
-    print(a)
-    print(b)
-    print(c)
-
+    print(post)
+    
+    
     c_form = CommentModelForm()
     post_added = False
 
@@ -218,22 +212,20 @@ def details(request, pk):
         if c_form.is_valid():
             instance = c_form.save(commit=False)
             instance.user = profile
-            instance.post = Post.objects.get(id=request.POST.get("post_id"))
+            instance.post = Post.objects.get(id=pk)
             instance.save()
 
             c_form = CommentModelForm()
     context = {
-        "posts": Post.objects.all().order_by("-date_posted"),
         "user": request.user,
         "pos": profile.get_posts_no,
-        "im": Profile.objects.filter(user=request.user),
         "profile": profile,
-        "friends": profile.get_friends(),
-        "nofriend": c,
+
         "c_form": c_form,
         "post_added": post_added,
-        "post_id": post_id,
-        "post": post_obj,
+        
+        "post": post.get ,
+        
     }
     return render(request, "blog/post_detail.html", context)
 

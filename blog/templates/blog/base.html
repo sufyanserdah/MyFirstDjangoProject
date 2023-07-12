@@ -58,9 +58,9 @@
                                     <a class="nav-link fs-15" href="{% url 'all-profiles-view' %}">all users</a>
                                 </li>
                                 <li class="nav-item pt-2 pl-3">
-                                    <form action="">
+                                    <form action="{% url 'search' %}" method="POST" id="search" >
                                     {% csrf_token %}
-                                        <input type="text" class="p-1 fs-14 pl-3 input-border"  placeholder="Search .. !" name="search" hx-post="{% url 'search-post' %}" hx-target="#results" hx-trigger="keyup changed delay:500ms" >
+                                        <input type="search" name="searched" class="p-1 fs-14 pl-3 input-border"  placeholder="Search .. !" >
                                     </form>
                                     
                                 </li>

@@ -1,19 +1,232 @@
-{% if results %}
+{% extends "blog/base.html" %}
+ {% load static %}
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Web - Project</title>
+    <meta name="description" content="" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="icon" type="image/png" href="{% static 'blog/favicon.ico' %}" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!--Custom css-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <!-- semantic UI -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="{% static 'blog/js/vendor/jquery-3.7.0.js' %}"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
 
-    {% csrf_token %}
-    <ul class="list-group col-xs-12">
-    {% for post in results %}
-        <li class="list-group-item d-flex justify-content-between align-items-center" style="
-        z-index: 999;">
-           <a href="{% url 'post-detail' post.pk %}"> {{ post.content }} </a>
-            <span class="badge badge-success badge-pill" 
-                style="cursor: pointer;"
-                hx-post="{% url 'all-profiles-view' %}"
-                hx-vals='{"postname": "{{post.content}}"}'
-                > <a href="{% url 'profile-detail-view' post.author.slug %}"> {{post.author.user}} </a>  </span>
-        </li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No search results</p>
-{% endif %}
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <!-- Place favicon.ico in the root directory -->
+    <link
+      rel="stylesheet"
+      href="{% static 'blog/css/vendor/bootstrap.min.css' %} "
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'blog/css/vendor/font-awesome.min.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'blog/css/vendor/animate.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'blog/css/vendor/hamburgers.min.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'blog/css/util.css' %}" />
+    <link rel="stylesheet" href="{% static 'blog/css/normalize.css' %}" />
+    <link rel="stylesheet" href="{% static 'blog/css/main.css' %}" />
+  </head>
+  <body>
+
+    {% block content %}
+
+    <div class="container mt-5" style="padding-left: 20%; padding-right: 20%;">
+      <div class="row">
+        <div >
+          
+      
+        
+{% for post in posts %}
+            
+          <div class="main-block post-with-photo" id="post-list">
+            <div class="Post-Box">
+              <div class="header row">
+                <div class="col-1" style="padding-right: 10%;">
+                  <div class="pt-2 pl-2 d-inline-block">
+                    
+                    <div
+                      class="Profile-Picture"
+                      style="background: url('{{ post.author.image.url }}') "
+                    ></div>
+                    
+                  </div>
+                  
+                </div>
+
+                
+
+                <div class="col-8 p-l-0">
+                  <div class="UserName d-inline-block mt-3">
+                    <p>
+                    </p>
+                    <p class="lh-1-2">
+                     {{ post.date_posted|date:"F d, Y" }}
+                      <i
+                        class="fa fa-globe fs-10"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Public"
+                      ></i>
+                      <br />
+                      <a href=" {%url 'post-detail' post.id%} " class="fs-10"
+                        >post-details</a
+                      >
+                    </p>
+                  </div>
+                  <div class="row">
+                    {% if request.user == post.author.user %}
+                    <a href="{% url 'post-update' post.pk %}"
+                      ><button class="ui button bwhite-lg">Update</button></a
+                    >
+                    <a href="{% url 'post-delete' post.pk %}"
+                      ><button class="ui button bwhite-lg">Delete</button></a
+                    >
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <hr class="m-2" />
+              
+                <div class="details col">
+                  <p class="px-3" style="padding: 10px">{{ post.content }}</p>
+                  
+                </div>
+                
+                
+                {% if post.post_image %}
+                 
+                  
+                    <div
+                      class="col"
+                      style="width: auto;  
+                      text-align: center;"
+                      
+                    >
+                    <img src="{{ post.post_image.url }}" alt="" style=" max-width: 50%;  
+                    height: auto;">
+                </div>
+                  
+                
+                {% endif %}
+              
+              <hr class="mt-0 mb-0" />
+              <div class="footer">
+                <div class="row action-btn">
+                  <div class="col">
+                    <form method="POST" action="{% url 'like-post-view' %}">
+                      {% csrf_token %}
+                      <input
+                        type="hidden"
+                        name="post_id"
+                        value="{{ post.id }}"
+                      />
+                      {% if profile not in post.liked.all %}
+                      <button
+                        style="
+                          background-color: transparent;
+                          border: none;
+                          box-shadow: none;
+                        "
+                        type="submit"
+                      >
+                        <p class="py-2 footer-btn" style="padding-left: 90px">
+                          <i class="fa fa-heart-o" aria-hidden="true"></i>
+                          <span class="px-1"> {{ post.num_likes }} Likes</span>
+                        </p>
+                      </button>
+                      {% else %}
+                      <button
+                        style="
+                          background-color: transparent;
+                          border: none;
+                          box-shadow: none;
+                        "
+                        type="submit"
+                      >
+                        <p class="py-2 footer-btn" style="padding-left: 90px">
+                          <i
+                            class="fa fa-heart-o"
+                            aria-hidden="true"
+                            style="color: red"
+                          ></i>
+                          <span class="px-1"> {{ post.num_likes }} Likes</span>
+                        </p>
+                      </button>
+                      {% endif %}
+                    </form>
+                  </div>
+                  <div class="col border-left">
+                    <p class="py-2 footer-btn text-center">
+                      <a href=""
+                        ><i class="fa fa-comment-o" aria-hidden="true"></i>
+                        <span class="px-1"> Comment</span></a
+                      >
+                    </p>
+                  </div>
+                </div>
+                <hr class="mt-0 mb-2" />
+                <div class="row comment-list">
+                  {% for c in post.comment_set.all %}
+                  <div class="add-comment col-12 pt-0">
+                    <div class="row">
+                      <div class="col-1" style="padding-right: 9%;">
+                        <div class="pt-2 pl-2 d-inline-block">
+                          <div
+                            class="Profile-Picture-Comment"
+                            style="background: url('{{ c.user.image.url }}'); "
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="comment-box col-10 pl-0">
+                        <div class="row pr-2 pt-2 pb-2 pl-0">
+                          <div class="col pl-0">
+                            <p class="pt-1 pl-2 pb-0 fs-14">{{c.body}}</p>
+                            <p class="p-0 pl-2 fs-10">
+                             
+                              <span class="fs-9">{{ c.created }}</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                  
+
+                  
+                </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+          
+        
+        
+      </div>
+    </div>
+
+    {% endblock content %}
+
+
+  </body>
+</html>
