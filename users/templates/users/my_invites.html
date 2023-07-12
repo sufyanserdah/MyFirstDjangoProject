@@ -1,47 +1,109 @@
-{% extends 'blog/base.html' %}
+<!DOCTYPE html>
+{% extends 'blog/base.html' %} {% block content %} {% if is_empty %}
+<div id="notfound" style="position: relative; height: 100vh">
+  <div
+    class="notfound"
+    style="
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    "
+  >
+    <div
+      class="notfound-404"
+      style="
+        position: relative;
+        height: 200px;
+        margin: 0px auto 20px;
+        z-index: -1;
+      "
+    >
+      <h1
+        style="
+          font-family: 'Montserrat', sans-serif;
+          font-size: 236px;
+          font-weight: 200;
+          margin: 0px;
+          color: #211b19;
+          text-transform: uppercase;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+        "
+      >
+        Oops!
+      </h1>
+      <h2
+        style="
+          font-family: 'Montserrat', sans-serif;
+          font-size: 28px;
+          font-weight: 400;
+          text-transform: uppercase;
+          color: #211b19;
+          background: #fff;
+          padding: 10px 5px;
+          margin: auto;
+          display: inline-block;
+          position: absolute;
+          bottom: 0px;
+          left: 0;
+          right: 0;
+          width: 227%;
+    margin-left: -61%;
+        "
+      >
+        You have no friend requests
+      </h2>
+    </div>
+    <div class="container-login100-form-btn">
+        <a href="{% url 'blog-home' %}">
+                            <button class="login100-form-btn">
+                                Back to HomePage
+                            </button></a>
+                        </div>
+   
+    
+  </div>
+</div>
 
+{% endif %} {% for obj in qs %}
+<div class="ui segment">
+  <div class="ui grid">
+    <div class="row">
+      <div class="three wide column">
+        <img class="ui small circular image" src="{{obj.image.url}}" />
+      </div>
+      <div class="thirteen wide column">
+        <h3>{{obj.user}}</h3>
 
-{% block content %}
-
-    {% if is_empty %}
-        <h1>No invatations here..</h1>
-    {% endif %}
- 
-    {% for obj in qs %}
-        <div class="ui segment">
-            <div class="ui grid">
-                <div class="row">
-                    <div class="three wide column">
-                        <img class="ui small circular image" src="{{obj.image.url}}">
-                    </div>
-                    <div class="thirteen wide column">
-                        <h3>{{obj.user}}</h3>
-                        
-                        <br>
-                        <a href="">
-                            <button class="ui primary button w-big mb-5">See profile</button>
-                        </a>
-                        <form action=" {% url 'accept-invite' %} " method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="profile_pk" value="{{obj.pk}}">
-                            <button type="submit" class="ui positive basic button w-big mb-5">
-                                <i class="check icon"></i>
-                                Accept invite
-                            </button>
-                        </form>
-                         <form action="{% url 'reject-invite' %}" method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="profile_pk" value="{{obj.pk}}">
-                            <button type="submit" class="ui negative basic button w-big mb-5">
-                                <i class="close icon"></i>
-                                Reject invite
-                            </button>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    {% endfor %}
-
-{% endblock content %}
+        <br />
+        <a href="">
+          <button class="ui primary button w-big mb-5">See profile</button>
+        </a>
+        <form action=" {% url 'accept-invite' %} " method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="profile_pk" value="{{obj.pk}}" />
+          <button type="submit" class="ui positive basic button w-big mb-5">
+            <i class="check icon"></i>
+            Accept invite
+          </button>
+        </form>
+        <form action="{% url 'reject-invite' %}" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="profile_pk" value="{{obj.pk}}" />
+          <button type="submit" class="ui negative basic button w-big mb-5">
+            <i class="close icon"></i>
+            Reject invite
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %} {% endblock content %}

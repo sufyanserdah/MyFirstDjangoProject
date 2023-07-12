@@ -1,25 +1,101 @@
 {% extends 'blog/base.html' %}
-
-
 {% block content %}
 
     {% if is_empty %}
-        <h1>No profiles to interact with</h1>
+        <div id="notfound" style="position: relative; height: 100vh">
+  <div
+    class="notfound"
+    style="
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    "
+  >
+    <div
+      class="notfound-404"
+      style="
+        position: relative;
+        height: 200px;
+        margin: 0px auto 20px;
+        z-index: -1;
+      "
+    >
+      <h1
+        style="
+          font-family: 'Montserrat', sans-serif;
+          font-size: 236px;
+          font-weight: 200;
+          margin: 0px;
+          color: #211b19;
+          text-transform: uppercase;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+        "
+      >
+        Oops!
+      </h1>
+      <h2
+        style="
+          font-family: 'Montserrat', sans-serif;
+          font-size: 28px;
+          font-weight: 400;
+          text-transform: uppercase;
+          color: #211b19;
+          background: #fff;
+          padding: 10px 5px;
+          margin: auto;
+          display: inline-block;
+          position: absolute;
+          bottom: 0px;
+          left: 0;
+          right: 0;
+          width: 235%;
+    margin-left: -61%;
+        "
+      >
+        There are currently no users 
+      </h2>
+    </div>
+    <div class="container-login100-form-btn">
+        <a href="{% url 'blog-home' %}">
+                            <button class="login100-form-btn">
+                                Back to HomePage
+                            </button></a>
+                        </div>
+   
+    
+  </div>
+</div>
+    
     {% endif %}
 
     {% for obj in qs %}
-        <div class="ui segment">
-            <div class="ui grid">
-                <div class="row">
+        <div class="ui segment" style="margin:20px">
+            <div class="ui grid" >
+                <div class="row" style="padding: 20px;margin:20px">
                     
                     <div class="three wide column">
                         <img class="ui small circular image" src="{{obj.image.url}}">
                     </div>
                     
-                    <div class="thirteen wide column">
-                        <h3>{{obj.user}}</h3>
+                    <div class="thirteen wide column" >
+                        <span class="login100-form-title animated" style="display: inline;   padding-left: 1%;  line-height: 2;">
+						{{obj.user}}
+					</span>
                         
-                        <a href="{{obj.get_absolute_url}}"><button class="ui primary button mb-5 w-big">See profile</button></a>
+                        <div class="container-login100-form-btn" style="justify-content: left;">
+                             <a href="{{obj.get_absolute_url}}">
+                            <button class="login100-form-btn">
+                                See profile
+                            </button></a>
+                        </div>
                         <br>
                         
 
