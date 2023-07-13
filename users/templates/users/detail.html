@@ -26,7 +26,8 @@
                     <div class="ui label">{{ object.get_friends_no }}</div>
                 </div>
             </div>
-
+            {% if object.user == request.user %}
+            {% else %}
             {% if object.user not in rel_receiver and object.user not in rel_sender %}
                 <form action="{% url 'send-invite' %}" method="POST">
                     {% csrf_token %}
@@ -45,6 +46,7 @@
                     <input type="hidden" name="profile_pk" value="{{object.pk}}">
                     <button type="submit" class="ui negative basic button mb-5 w-big"><i class="minus square icon"></i>Remove from friends</button>
                 </form>
+            {% endif %}
             {% endif %}
 
         </div>

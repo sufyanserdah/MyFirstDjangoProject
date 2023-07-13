@@ -2,7 +2,7 @@
 <!doctype html>
 <html class="no-js" lang="en">
 <head>
-    <meta charset="utf-8">
+     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -29,6 +29,42 @@
     <link rel="stylesheet" href="{% static 'blog/css/util.css' %}">
     <link rel="stylesheet" href="{% static 'blog/css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'blog/css/main.css' %}">
+        <style> 
+      .tabs {
+  display: flex;
+  flex-wrap: wrap;
+ justify-content: space-around;
+width: 100%;
+}
+
+.tabs__label {
+  padding: 10px 16px;
+  
+}
+
+.tabs__radio {
+  display: none;
+}
+
+.tabs__content {
+  order: 1;
+  width: 100%;
+  border-bottom: 3px solid #dddddd;
+  line-height: 1.5;
+  font-size: 0.9em;
+  display: none;
+}
+
+.tabs__radio:checked + .tabs__label {
+  font-weight: bold;
+  color:#8B54C7;
+  border-bottom: 2px solid #8B54C7;
+}
+
+.tabs__radio:checked + .tabs__label + .tabs__content {
+  display: initial;
+}
+</style>
 </head>
 <body>
 
@@ -114,63 +150,7 @@
 
 <script src="{% static 'blog/js/main.js' %}"></script>
 <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-<script>
-    window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
-    ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
-</script>
-<script>
-    $( document ).ready(function() {
-        let display = false
-        $(".cmt_btn").click(function () {
-            if (display===false) {
-                $(this).next(".comment-box").show("slow");
-                display=true
-            } else {
-                $(this).next(".comment-box").hide("slow");
-                display=false
-            }  
-        });
 
-        $('.like-form').submit(function(e){
-            e.preventDefault()
-            
-            const post_id = $(this).attr('id')
-            
-            const likeText = $(`.like-btn${post_id}`).text()
-            const trim = $.trim(likeText)
-
-            const url = $(this).attr('action')
-            
-            let res;
-            const likes = $(`.like-count${post_id}`).text()
-            const trimCount = parseInt(likes)
-            
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: {
-                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
-                    'post_id':post_id,
-                },
-                success: function(response) {
-                    if(trim === 'Unlike') {
-                        $(`.like-btn${post_id}`).text('Like')
-                        res = trimCount - 1
-                    } else {
-                        $(`.like-btn${post_id}`).text('Unlike')
-                        res = trimCount + 1
-                    }
-
-                    $(`.like-count${post_id}`).text(res)
-                },
-                error: function(response) {
-                    console.log('error', response)
-                }
-            })
-
-        })
-    });
-</script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://www.google-analytics.com/analytics.js" async defer></script>
 </body>
