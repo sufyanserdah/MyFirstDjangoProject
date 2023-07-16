@@ -322,6 +322,15 @@ nav{
 }
 
 
+.bruh-box input{
+    border-radius: 25px;
+    border: 1px solid #c6c8ca;
+    width: 100%;
+
+}
+.bruh-box input:focus{
+    border: 1px solid #c6c8ca !important;
+}
 
 .comment-box input{
     border-radius: 25px;

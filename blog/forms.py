@@ -45,7 +45,7 @@ class CommentModelForm(forms.ModelForm):
         self.fields['body'].label = ""
         self.fields["body"].widget.attrs.update({
             "class":"p-2 fs-14 pl-3",
-            # "style":"height: 75px;resize: none;color: #666666;    border-radius: 5px; border-style:solid;",
+            "style":" background:transparent",
 
             "type":"text",
             "name":"fullname",
