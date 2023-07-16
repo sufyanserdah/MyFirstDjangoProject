@@ -149,13 +149,13 @@ def profile(request):
         "c_form": c_form,
         "post_added": post_added,
         "pos": profile.get_posts_no,
-        "profile": profile,
+        
         "form": form,
         "confirm": confirm,
-        "friends": profile.get_friends(),
-        "p_form": p_form,
-        "c_form": c_form,
-        "post_added": post_added,
+        
+        
+        
+        
     }
 
     return render(request, "blog/profile.html", context)

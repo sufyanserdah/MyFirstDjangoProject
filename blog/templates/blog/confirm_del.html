@@ -29,19 +29,46 @@
 
 
 {% block content %}
-{% if messages %}
-{% for message in messages %}
-    {% if 'warning' in message.tags %}
-        <div class="ui negative message">
-            <div class="header">
-                {{message}}
-            </div>
-        </div>
-    {% endif %}
-{% endfor %}
-{% endif %}
 
-{% if not messages %}
+<div class="container" style=" height: 100vh;
+  background-color: #9053c7;
+  display: flex;
+  justify-content: center;
+  align-items: center;">
+      <div class="box" style="background-color: #fff;
+  border: 1px solid #888;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;">
+        <h3 style="margin-top: 20px;
+  margin-bottom: 10px;
+  color: #112a43;">Delete media?</h3>
+        <p style=" color: #112a43;">Are you sure you want to delete</p>
+
+        <div class="warn_info" style="
+  width: 95%;
+  margin: 30px 0;
+  background-color: #ffe7d9;
+  padding: 15px;
+  border-radius: 4px;
+  position: relative;">
+          <h4 style=" color: #7e1709;
+  margin: 10px 0;" ><i class="fa fa-warning"></i> Warning</h4>
+          <p style="color: #f47142;" >By deleting "hero.png" media you can't undo this action.</p>
+        </div>
+
+        <div class="clearfix">
+         <form action="" method="POST">
+        {% csrf_token %}
+        <p>Are you sure you want to delete the post?</p>
+        <button type="submit" class="ui negative basic button w-big mb-5" >Delete</button>
+    </form>
+        </div>
+      </div>
+    </div>
+
 <div class="ui segment">
     <h3>Delete post?</h3>
     <form action="" method="POST">
@@ -50,8 +77,6 @@
         <button type="submit" class="ui negative basic button w-big mb-5" >Delete</button>
     </form>
 </div>
-{% endif %}
-
 {% endblock content%}
 
 <script src=" {% static 'blog/js/vendor/modernizr-3.5.0.min.js' %}"></script>
