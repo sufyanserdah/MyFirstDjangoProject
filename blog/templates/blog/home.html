@@ -1,5 +1,4 @@
-{% extends "blog/base.html" %}
- {% load static %}
+{% extends "blog/base.html" %} {% load static %}
 <!DOCTYPE html>
 <html class="no-js" lang="en">
   <head>
@@ -46,7 +45,6 @@
     <link rel="stylesheet" href="{% static 'blog/css/main.css' %}" />
   </head>
   <body>
-
     {% block content %}
 
     <div class="container mt-5">
@@ -82,37 +80,32 @@
           {% if post_added %}
           <div class="ui green message">Post added</div>
           {% endif %}
-          <div style="background-color: white; padding-bottom: 7%; margin-bottom: 3%;">
-          <form
-            method="POST"
-            action=""
-            enctype="multipart/form-data"
-            
+          <div
+            style="
+              background-color: white;
+              padding-bottom: 7%;
+              margin-bottom: 3%;
+            "
           >
-        
-            {% csrf_token %}
-            
-            {{p_form.as_p}}
-            
-            <hr>
-            <div class="action p-2 pr-3">
-              <button
-              
-                name="submit_p_form"
-                type="submit"
-                class="float-r p-2 fs-16 post"
-              >
-                save
-              </button>
-            </div>
-            
-          </form>
-        </div>
-        
+            <form method="POST" action="" enctype="multipart/form-data">
+              {% csrf_token %} {{p_form.as_p}}
+
+              <hr />
+              <div class="action p-2 pr-3">
+                <button
+                  name="submit_p_form"
+                  type="submit"
+                  class="float-r p-2 fs-16 post"
+                >
+                  save
+                </button>
+              </div>
+            </form>
+          </div>
+
           {% include 'blog/post-list.html' %}
         </div>
-          
-        
+
         <div class="col-3 mobile-hidden">
           <div class="main-block">
             <div class="row">
@@ -138,7 +131,11 @@
               <div class="col">
                 <div class="UserName d-inline-block mt-3">
                   <p>
-                    <a href="{% url 'profile-detail-view' friend.slug %}" class="font-weight-bold">{{ friend.user }}</a>
+                    <a
+                      href="{% url 'profile-detail-view' friend.slug %}"
+                      class="font-weight-bold"
+                      >{{ friend.user }}</a
+                    >
                   </p>
                 </div>
               </div>

@@ -3,7 +3,7 @@
           <div class="main-block post-with-photo" id="post-list">
             <div class="Post-Box">
               <div class="header row">
-                <div class="col-1" style="padding-right: 10%;">
+                <div class="col-1" style="padding-right: 9%; padding-top: 1%;">
                   <div class="pt-2 pl-2 d-inline-block">
                     <div
                       class="Profile-Picture"
@@ -14,7 +14,12 @@
                 <div class="col-8 p-l-0">
                   <div class="UserName d-inline-block mt-3">
                     <p>
-                    </p>
+            <a
+              href="{% url 'profile-detail-view' post.author.slug %}"
+              class="font-weight-bold"
+              >{{ post.author.user }}</a
+            >
+          </p>
                     <p class="lh-1-2">
                      {{ post.date_posted|date:"F d, Y" }}
                       <i
@@ -46,15 +51,17 @@
       <div class="details col">
         <p class="px-3" style="padding: 10px">{{ post.content }}</p>
       </div>
-      {% if post.post_image %}
-      <div class="image col-sm-12">
-        <div height="{{ post.post_image.width }}">
-          <div
-            style=" background: url('{{ post.post_image.url }}'); height:500px ;background-size: cover;background-position: top center;"
-          ></div>
-        </div>
+    {% if post.post_image %}
+
+      <div style="text-align: center">
+        <img
+          src="{{ post.post_image.url }}"
+          alt=""
+          style="max-width: 50%; height: auto"
+        />
       </div>
-                {% endif %}
+
+      {% endif %}
               </div>
               <hr class="mt-0 mb-0" />
               <div class="footer">

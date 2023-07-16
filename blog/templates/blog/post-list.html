@@ -50,19 +50,17 @@
       <div class="details col">
         <p class="px-3" style="padding: 10px">{{ post.content }}</p>
       </div>
-      
+
       {% if post.post_image %}
-      
-      <div
-                      
-                      style=" 
-                      text-align: center;"
-                      
-                    >
-                    <img src="{{ post.post_image.url }}" alt="" style=" max-width: 50%;  
-                    height: auto;">
-                </div>
-   
+
+      <div style="text-align: center">
+        <img
+          src="{{ post.post_image.url }}"
+          alt=""
+          style="max-width: 50%; height: auto"
+        />
+      </div>
+
       {% endif %}
     </div>
     <hr class="mt-0 mb-0" />
@@ -129,12 +127,19 @@
                 ></div>
               </div>
             </div>
-            <div >
+            <div>
               <div class="row pr-2 pt-2 pb-2 pl-0">
                 <div class="col pl-0">
                   <p class="pt-1 pl-2 pb-0 fs-14">{{c.body}}</p>
                   <p class="p-0 pl-2 fs-10">
                     <span class="fs-9">{{ c.created }}</span>
+                    <span class="fs-9">
+                      <a
+                        href="{% url 'profile-detail-view' c.user.slug %}"
+                        class="fs-9"
+                        >{{ c.user.user }}</a
+                      ></span
+                    >
                   </p>
                 </div>
               </div>
@@ -146,7 +151,6 @@
           <div class="row">
             <div class="col-1" style="padding-right: 12%">
               <div class="pt-2 pl-2 d-inline-block">
-                
                 <div
                   class="Profile-Picture-Comment"
                   style="background: url('{{ user.profile.image.url }}'); "
@@ -159,8 +163,14 @@
                   <form method="POST" action="" enctype="multipart/form-data">
                     {% csrf_token %}
                     <input type="hidden" name="post_id" value="{{post.id}}" />
-                    <div  style=" border-radius: 25px; border: 1px solid #c6c8ca; width: 100%;">
-                    {{c_form}}
+                    <div
+                      style="
+                        border-radius: 25px;
+                        border: 1px solid #c6c8ca;
+                        width: 100%;
+                      "
+                    >
+                      {{c_form}}
                     </div>
                     <div class="action p-2 pr-3">
                       <button
@@ -182,6 +192,4 @@
     </div>
   </div>
 </div>
-{% else %} 
-{% endif %}
- {% endfor %}
+{% else %} {% endif %} {% endfor %}

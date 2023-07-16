@@ -1,101 +1,144 @@
-{% extends "blog/base.html" %}
-{% load static %}
-<!doctype html>
+{% extends "blog/base.html" %} {% load static %}
+<!DOCTYPE html>
 <html class="no-js" lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>Web - Project</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="{% static 'blog/favicon.ico' %}">
+    <meta name="description" content="" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="icon" type="image/png" href="{% static 'blog/favicon.ico' %}" />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <!--Custom css-->
     <!-- semantic UI -->
-    <link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="apple-touch-icon" href="icon.png" />
     <!-- Place favicon.ico in the root directory -->
-    <link rel="stylesheet" href="{% static 'blog/css/vendor/bootstrap.min.css' %} " >
-    <link rel="stylesheet" href="{% static 'blog/css/vendor/font-awesome.min.css' %}">
-    <link rel="stylesheet" href="{% static 'blog/css/vendor/animate.css' %}">
-    <link rel="stylesheet" href="{% static 'blog/css/vendor/hamburgers.min.css' %}">
-    <link rel="stylesheet" href="{% static 'blog/css/util.css' %}">
-    <link rel="stylesheet" href="{% static 'blog/css/normalize.css' %}">
-    <link rel="stylesheet" href="{% static 'blog/css/main.css' %}">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="{% static 'blog/css/vendor/bootstrap.min.css' %} "
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'blog/css/vendor/font-awesome.min.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'blog/css/vendor/animate.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'blog/css/vendor/hamburgers.min.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'blog/css/util.css' %}" />
+    <link rel="stylesheet" href="{% static 'blog/css/normalize.css' %}" />
+    <link rel="stylesheet" href="{% static 'blog/css/main.css' %}" />
+  </head>
+  <body>
+    {% block content %}
 
+    <div
+      class="container"
+      style="
+        height: 100vh;
+        background-color: #9053c7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <div
+        class="box"
+        style="
+          background-color: #fff;
+          border: 1px solid #888;
 
-{% block content %}
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          border-radius: 5px;
+        "
+      >
+        <h3 style="margin-top: 20px; margin-bottom: 10px; color: #112a43">
+          Delete media?
+        </h3>
+        <p style="color: #112a43">Are you sure you want to delete</p>
 
-<div class="container" style=" height: 100vh;
-  background-color: #9053c7;
-  display: flex;
-  justify-content: center;
-  align-items: center;">
-      <div class="box" style="background-color: #fff;
-  border: 1px solid #888;
-  
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 5px;">
-        <h3 style="margin-top: 20px;
-  margin-bottom: 10px;
-  color: #112a43;">Delete media?</h3>
-        <p style=" color: #112a43;">Are you sure you want to delete</p>
-
-        <div class="warn_info" style="
-  width: 95%;
-  margin: 30px 0;
-  background-color: #ffe7d9;
-  padding: 15px;
-  border-radius: 4px;
-  position: relative;">
-          <h4 style=" color: #7e1709;
-  margin: 10px 0;" ><i class="fa fa-warning"></i> Warning</h4>
-          <p style="color: #f47142;" >By deleting "hero.png" media you can't undo this action.</p>
+        <div
+          class="warn_info"
+          style="
+            width: 95%;
+            margin: 30px 0;
+            background-color: #ffe7d9;
+            padding: 15px;
+            border-radius: 4px;
+            position: relative;
+          "
+        >
+          <h4 style="color: #7e1709; margin: 10px 0">
+            <i class="fa fa-warning"></i> Warning
+          </h4>
+          <p style="color: #f47142">
+            By deleting "hero.png" media you can't undo this action.
+          </p>
         </div>
 
         <div class="clearfix">
-         <form action="" method="POST">
-        {% csrf_token %}
-        <p>Are you sure you want to delete the post?</p>
-        <button type="submit" class="ui negative basic button w-big mb-5" >Delete</button>
-    </form>
+          <form action="" method="POST">
+            {% csrf_token %}
+            <p>Are you sure you want to delete the post?</p>
+            <button type="submit" class="ui negative basic button w-big mb-5">
+              Delete
+            </button>
+          </form>
         </div>
       </div>
     </div>
 
-<div class="ui segment">
-    <h3>Delete post?</h3>
-    <form action="" method="POST">
+    <div class="ui segment">
+      <h3>Delete post?</h3>
+      <form action="" method="POST">
         {% csrf_token %}
         <p>Are you sure you want to delete the post?</p>
-        <button type="submit" class="ui negative basic button w-big mb-5" >Delete</button>
-    </form>
-</div>
-{% endblock content%}
+        <button type="submit" class="ui negative basic button w-big mb-5">
+          Delete
+        </button>
+      </form>
+    </div>
+    {% endblock content%}
 
-<script src=" {% static 'blog/js/vendor/modernizr-3.5.0.min.js' %}"></script>
-<script src="{% static 'blog/js/vendor/jquery-3.3.1.slim.min.js' %}" ></script>
-<script src="{% static 'blog/js/vendor/popper.min.js' %}" ></script>
-<script src="{% static 'blog/js/vendor/bootstrap.min.js' %}"  ></script>
-<script src="{% static 'blog/js/vendor/tilt.jquery.min.js' %}"></script>
-<script src="{% static 'blog/js/plugins.js' %}"></script>
-<script >
-    $('.js-tilt').tilt({
-        scale: 1.1
-    })
-</script>
-<script src="{% static 'blog/js/main.js' %}"></script>
-<!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-<script>
-    window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
-    ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
-</script>
-<script src="https://www.google-analytics.com/analytics.js" async defer></script>
-</body>
+    <script src=" {% static 'blog/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+    <script src="{% static 'blog/js/vendor/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'blog/js/vendor/popper.min.js' %}"></script>
+    <script src="{% static 'blog/js/vendor/bootstrap.min.js' %}"></script>
+    <script src="{% static 'blog/js/vendor/tilt.jquery.min.js' %}"></script>
+    <script src="{% static 'blog/js/plugins.js' %}"></script>
+    <script>
+      $(".js-tilt").tilt({
+        scale: 1.1,
+      });
+    </script>
+    <script src="{% static 'blog/js/main.js' %}"></script>
+    <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+    <script>
+      window.ga = function () {
+        ga.q.push(arguments);
+      };
+      ga.q = [];
+      ga.l = +new Date();
+      ga("create", "UA-XXXXX-Y", "auto");
+      ga("send", "pageview");
+    </script>
+    <script
+      src="https://www.google-analytics.com/analytics.js"
+      async
+      defer
+    ></script>
+  </body>
 </html>
