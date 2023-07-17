@@ -16,6 +16,7 @@ class RegisterForm(UserCreationForm):
         self.fields['password2'].help_text = None
         self.fields['username'].help_text = None
         self.fields['email'].help_text = None
+        
         self.fields["username"].widget.attrs.update({
             "class":"input100",
             
