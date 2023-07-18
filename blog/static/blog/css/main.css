@@ -190,8 +190,33 @@ iframe {
     width: 100%;
     margin: 0 auto;
 }
+div.fileinputs {
+	position: relative;
+}
 
+div.fakefile {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+}
+input.file {
+	position: relative;
+	text-align: right;
+	-moz-opacity:0 ;
+	opacity: 0;
+	z-index: 2;
+}
 
+.dropzone{
+    margin-top: 5px;
+    width: 360px;
+    background-color: rgba(225,225,225,0.5) !important;
+    border-radius: 5px;
+    height:140px;
+    border: 3px dashed green;
+    padding-top: 150px;
+    }
 .container-login100 {
     width: 100%;
     min-height: 100vh;

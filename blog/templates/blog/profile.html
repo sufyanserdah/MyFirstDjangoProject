@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% extends "blog/base.html" %} {% load static %} {% load crispy_forms_tags %}
+{% extends "blog/base.html" %} {% load static %} {% load crispy_forms_tags %} {% load widget_tweaks %}
 {% block content %}
 <div class="container mt-5" style="width: 75%">
   <div class="row">
@@ -46,12 +46,17 @@
           Change your profile image and background image
         </h1>
         <form
+        
           action=""
           method="POST"
           enctype="multipart/form-data"
           style="padding: 2%"
         >
-          {% csrf_token %} {{form.as_p}}
+          {% csrf_token %} 
+          
+          {{form.image}}
+          <br>
+          {{form.bgimage}}
           <div style="text-align: -webkit-right">
             <button type="submit" class="p-2 fs-16 post">save</button>
           </div>
