@@ -30,13 +30,14 @@
 .tabs {
   display: flex;
   flex-wrap: wrap;
-  max-width: 400px;
+  
   font-family: sans-serif;
 }
 
 .tabs__label {
   padding: 10px 16px;
   cursor: pointer;
+  width: 50%;
 }
 
 .tabs__radio {

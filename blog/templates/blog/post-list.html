@@ -107,10 +107,8 @@
         </div>
         <div class="col border-left">
           <p class="py-2 footer-btn text-center">
-            <a href=""
-              ><i class="fa fa-comment-o" aria-hidden="true"></i>
-              <span class="px-1"> Comment</span></a
-            >
+            <i class="fa fa-comment-o" aria-hidden="true"></i>
+              <span class="px-1"> Comment</span>
           </p>
         </div>
       </div>
@@ -163,7 +161,7 @@
             <div class="bruh-box col-10 pl-0">
               <div class="row pr-2 pt-2 pb-2 pl-0">
                 <div class="col pl-0">
-                  <form method="POST" action="" enctype="multipart/form-data">
+                  <form method="POST" action="" enctype="multipart/form-data" id="f" name="f">
                     {% csrf_token %}
                     <input type="hidden" name="post_id" value="{{post.id}}" />
                     <div

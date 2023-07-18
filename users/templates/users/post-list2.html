@@ -2,8 +2,8 @@
             
           <div class="main-block post-with-photo" id="post-list">
             <div class="Post-Box">
-              <div class="header row">
-                <div class="col-1" style="padding-right: 9%; padding-top: 1%;">
+              <div class="header row" style="width: 144%">
+                <div class="col-1" style=" padding-top: 1%;">
                   <div class="pt-2 pl-2 d-inline-block">
                     <div
                       class="Profile-Picture"
@@ -12,7 +12,7 @@
                   </div>
                 </div>
                 <div class="col-8 p-l-0">
-                  <div class="UserName d-inline-block mt-3">
+                  <div class="UserName d-inline-block mt-3" >
                     <p>
             <a
               href="{% url 'profile-detail-view' post.author.slug %}"
@@ -34,16 +34,16 @@
                       >
                     </p>
                   </div>
-                  <div class="row">
-                    {% if request.user == post.author.user %}
-                    <a href="{% url 'post-update' post.pk %}"
-                      ><button class="ui button bwhite-lg">Update</button></a
-                    >
-                    <a href="{% url 'post-delete' post.pk %}"
-                      ><button class="ui button bwhite-lg">Delete</button></a
-                    >
-                    {% endif %}
-                  </div>
+                 <div style="display: inline; padding-left: 60%">
+            {% if request.user == post.author.user %}
+            <a href="{% url 'post-update' post.pk %}" style="padding: 5%"
+              ><i class="fa fa-edit fa-2x"></i
+            ></a>
+            <a href="{% url 'post-delete' post.pk %}"
+              ><i class="fa fa-trash fa-2x" aria-hidden="true"></i
+            ></a>
+            {% endif %}
+          </div>
                 </div>
               </div>
               <hr class="m-2" />

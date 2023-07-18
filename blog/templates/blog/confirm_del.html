@@ -46,11 +46,17 @@
     <div
       class="container"
       style="
-        height: 100vh;
+        height: 84vh;
         background-color: #9053c7;
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-top: 1%;
+        margin-bottom: 1%;
+        width: 100%;
+        max-width: 100000px;
+        margin-right: 0px;
+        margin: 0px;
       "
     >
       <div
@@ -66,7 +72,7 @@
         "
       >
         <h3 style="margin-top: 20px; margin-bottom: 10px; color: #112a43">
-          Delete media?
+          Delete Post?
         </h3>
         <p style="color: #112a43">Are you sure you want to delete</p>
 
@@ -85,7 +91,7 @@
             <i class="fa fa-warning"></i> Warning
           </h4>
           <p style="color: #f47142">
-            By deleting "hero.png" media you can't undo this action.
+            By deleting this post you can't undo this action.
           </p>
         </div>
 
@@ -93,7 +99,7 @@
           <form action="" method="POST">
             {% csrf_token %}
             <p>Are you sure you want to delete the post?</p>
-            <button type="submit" class="ui negative basic button w-big mb-5">
+            <button type="submit" class="ui negative basic button w-big mb-5" style="margin-left: 15.5%;">
               Delete
             </button>
           </form>
@@ -101,16 +107,7 @@
       </div>
     </div>
 
-    <div class="ui segment">
-      <h3>Delete post?</h3>
-      <form action="" method="POST">
-        {% csrf_token %}
-        <p>Are you sure you want to delete the post?</p>
-        <button type="submit" class="ui negative basic button w-big mb-5">
-          Delete
-        </button>
-      </form>
-    </div>
+
     {% endblock content%}
 
     <script src=" {% static 'blog/js/vendor/modernizr-3.5.0.min.js' %}"></script>

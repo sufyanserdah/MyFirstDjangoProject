@@ -46,7 +46,7 @@ class CommentModelForm(forms.ModelForm):
         self.fields["body"].widget.attrs.update({
             "class":"p-2 fs-14 pl-3",
             "style":" background:transparent",
-
+            "id":"fullname",
             "type":"text",
             "name":"fullname",
             "placeholder":"What about today?",
