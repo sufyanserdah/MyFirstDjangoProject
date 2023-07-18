@@ -1,95 +1,65 @@
-<!doctype html>
-{% extends "blog/base.html" %}
-{% load static %}
-
-{% load crispy_forms_tags %}
-<html class="no-js" lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Web - Project</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="{% static 'blog/favicon.ico' %}">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <!--Custom css-->
-    <!-- semantic UI -->
-    <link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="apple-touch-icon" href="icon.png">
-    <!-- Place favicon.ico in the root directory -->
-    <link rel="stylesheet" href="{% static 'blog/css/vendor/bootstrap.min.css' %} " >
-    <link rel="stylesheet" href="{% static 'blog/css/vendor/font-awesome.min.css' %}">
-    <link rel="stylesheet" href="{% static 'blog/css/vendor/animate.css' %}">
-    <link rel="stylesheet" href="{% static 'blog/css/vendor/hamburgers.min.css' %}">
-    <link rel="stylesheet" href="{% static 'blog/css/util.css' %}">
-    <link rel="stylesheet" href="{% static 'blog/css/normalize.css' %}">
-    <link rel="stylesheet" href="{% static 'blog/css/main.css' %}">
-</head>
-<body>
-<!--[if lte IE 9]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-<![endif]-->
-
-<!-- Add your site or application content here -->
-
+<!DOCTYPE html>
+{% extends "blog/base.html" %} {% load static %} {% load crispy_forms_tags %}
 {% block content %}
-            <div class="container mt-5" style="width: 75%">
-                <div class="row">
-                    <div class="col ">
-                        <div class="main-block">
-                            <div class="coverPicture" style="background: url('{{ user.profile.bgimage.url }}'); height:200px;"></div>
-                            <div class="profilePicture" style="background: url('{{ user.profile.image.url }}');"></div>
-                            <div class="FullName text-center  fs-18 ProjectColor ">
-                                {{ user.username }}
-                            </div>
-                            <div class="row statistic text-center fs-16 p-3">
-                                <div class="col "><p>Ferinds</p> <br> <p>{{ profile.get_friends_no }}</p></div>
-                                <div class="col border-left"><p>Posts</p> <br> <p>{{ profile.get_posts_no }}</p></div>
-                            </div>
-                            
-                        </div>
-                        <div>
-                        <h1>Change your profile picture and cover picture</h1>
-                        <form action="" method="POST" enctype="multipart/form-data">
-                          {% csrf_token %}
-                          {{form}}
-                          <button
-     
-                type="submit"
-                class="float-r p-2 fs-16 post"
-              >
-                save
-              </button>
-                        </form>
-                      </div>
-                        
-                    </div>
-                    
-                </div>
-               
-                {% include 'blog/user-post-list.html' %}
+<div class="container mt-5" style="width: 75%">
+  <div class="row">
+    <div class="col">
+      <div class="main-block">
+        <div
+          class="coverPicture"
+          style="background: url('{{ user.profile.bgimage.url }}'); height:200px;"
+        ></div>
+        <div
+          class="profilePicture"
+          style="background: url('{{ user.profile.image.url }}');"
+        ></div>
+        <div class="FullName text-center fs-18 ProjectColor">
+          {{ user.username }}
+        </div>
+        <div class="row statistic text-center fs-16 p-3">
+          <div class="col">
+            <p>Ferinds</p>
+            <br />
+            <p>{{ profile.get_friends_no }}</p>
+          </div>
+          <div class="col border-left">
+            <p>Posts</p>
+            <br />
+            <p>{{ profile.get_posts_no }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="main-block">
+        <h1
+          style="
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            font-weight: 500;
+            margin: 0px;
+            color: #211b19;
+            text-transform: uppercase;
+            padding: 1%;
+            left: 50%;
+            top: 50%;
+          "
+        >
+          Change your profile image and background image
+        </h1>
+        <form
+          action=""
+          method="POST"
+          enctype="multipart/form-data"
+          style="padding: 2%"
+        >
+          {% csrf_token %} {{form.as_p}}
+          <div style="text-align: -webkit-right">
+            <button type="submit" class="p-2 fs-16 post">save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
-{% endblock content%}
-
-<script src=" {% static 'blog/js/vendor/modernizr-3.5.0.min.js' %}"></script>
-<script src="{% static 'blog/js/vendor/jquery-3.3.1.slim.min.js' %}" ></script>
-<script src="{% static 'blog/js/vendor/popper.min.js' %}" ></script>
-<script src="{% static 'blog/js/vendor/bootstrap.min.js' %}"  ></script>
-<script src="{% static 'blog/js/vendor/tilt.jquery.min.js' %}"></script>
-<script src="{% static 'blog/js/plugins.js' %}"></script>
-<script >
-    $('.js-tilt').tilt({
-        scale: 1.1
-    })
-</script>
-<script src="{% static 'blog/js/main.js' %}"></script>
-<!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-<script>
-    window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
-    ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
-</script>
-<script src="https://www.google-analytics.com/analytics.js" async defer></script>
-</body>
-</html>
+  {% include 'blog/user-post-list.html' %} 
+  {% endblock content %}
+</div>

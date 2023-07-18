@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% extends 'blog/base.html' %} {% block content %} {% if is_empty %}
-<div id="notfound" style="position: relative; height: 100vh">
+<div id="notfound" style="position: relative; height: 84vh">
   <div
     class="notfound"
     style="
@@ -73,19 +73,23 @@
 </div>
 
 {% endif %} {% for obj in qs %}
-<div class="ui segment">
+<div class="ui segment" style="margin: 1%;">
   <div class="ui grid">
     <div class="row">
       <div class="three wide column">
-        <img class="ui small circular image" src="{{obj.image.url}}" />
+        <img class="ui small circular image" style="margin-left: 15%;" src="{{obj.image.url}}" />
       </div>
-      <div class="thirteen wide column">
-        <h3>{{obj.user}}</h3>
-
+      <div class="thirteen wide column" >
+                        <span class="login100-form-title animated" style="display: inline;   padding-left: 1%;  line-height: 2;">
+						{{obj.user}}
+					</span>
         <br />
-        <a href="">
-          <button class="ui primary button w-big mb-5">See profile</button>
-        </a>
+         <div class="container-login100-form-btn" style="justify-content: left; padding-top: 0px; padding-bottom: 1%;">
+                             <a href="{{obj.get_absolute_url}}">
+                            <button class="login100-form-btn">
+                                See profile
+                            </button></a>
+                        </div>
         <form action=" {% url 'accept-invite' %} " method="POST">
           {% csrf_token %}
           <input type="hidden" name="profile_pk" value="{{obj.pk}}" />

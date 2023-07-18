@@ -105,7 +105,7 @@
 
           {% include 'blog/post-list.html' %}
         </div>
-
+    {% if nofriend|length != 1  %}
         <div class="col-3 mobile-hidden">
           <div class="main-block">
             <div class="row">
@@ -144,6 +144,8 @@
             
             {% endif %} 
             {% endfor %}
+            {% else %}
+            {% endif %}
           </div>
         </div>
       </div>

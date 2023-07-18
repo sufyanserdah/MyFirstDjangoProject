@@ -63,7 +63,7 @@ def home(request):
     print(type(c))
     print(a)
     print(b)
-    print(c)
+    print( bool(c) )
     p_form = PostModelForm()
     c_form = CommentModelForm()
     post_added = False
@@ -246,7 +246,7 @@ class AddPostView(CreateView, LoginRequiredMixin, UserPassesTestMixin):
 class PostDeleteView(DeleteView, LoginRequiredMixin):
     model = Post
     template_name = "blog/confirm_del.html"
-    success_url = reverse_lazy("blog-home")
+    success_url = reverse_lazy("profile")
 
     def get_object(self, *args, **kwargs):
         pk = self.kwargs.get("pk")
