@@ -48,11 +48,43 @@ def register(request):
         if form.is_valid():
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password1")
+            if LengthValidator().validate(password):
+                messages.warning(
+                    request, "The password must contain at least 9 charachters: "
+                )
+                return redirect(f"/")
+            if UppercaseValidator().validate(password):
+                messages.warning(
+                    request,
+                    "The password must contain at least 1 uppercase letter, A-Z.",
+                )
+                return redirect(f"/")
+
+            if NumberValidator().validate(password):
+                messages.warning(
+                    request, "The password must contain at least 1 digit, 0-9."
+                )
+                return redirect(f"/")
+
+            if SymbolValidator().validate(password):
+                messages.warning(
+                    request,
+                    "The password must contain at least 1 special character: "
+                    + "()[]{}|\`~!@#$%^&*_-+=;:'\",<>./?",
+                )
+                return redirect(f"/")
+
+            if RepeatedValidator().validate(password):
+                messages.warning(
+                    request,
+                    "The password cannot be the same as previously used passwords.",
+                )
+                return redirect(f"/")
             form.save()
             messages.success(request, f"Account created for {username} ")
             return redirect("blog-login")
         else:
-            messages.error(request, f"Account failed to create")
+            messages.warning(request, f"Account failed to create")
     else:
         form = RegisterForm()
     context = {"form": form}

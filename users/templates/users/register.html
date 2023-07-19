@@ -45,14 +45,7 @@
                         {% endfor %}
                     {% endif %}
                     {% csrf_token %}
-                    <div class="messages" style="display: none ; margin:40px"> 
-                        <img class="message-icon" src="{% static 'blog/img/381599_error_icon.png' %}" alt="error" style=" width: 90px; padding-right: 20px; " > 
-                        <div class="message"> 
-                            <h3 class="message-title title">Error</h3> 
-                            <p class="message-paragraph">Something went wrong!</p> 
-                        </div> 
-                        <span class="message-close error">x</span> 
-                    </div>
+                   
                     <span class="login100-form-title">
                         Register
                     </span>
@@ -87,12 +80,9 @@
                             
                         <span class="symbol-input100">
                             
-                            {% if messages %}
                             
-                            <i class="fa fa-lock" aria-hidden="true" style="padding-bottom: 60px;"></i>
-                            {% else %}
                             <i class="fa fa-lock" aria-hidden="true" ></i>
-                            {% endif %}
+                            
                 
                         </span>
                         {{form.password2|as_crispy_field}}
