@@ -1,50 +1,6 @@
 {% extends "blog/base.html" %} {% load static %}
 <!DOCTYPE html>
-<html class="no-js" lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Web - Project</title>
-    <meta name="description" content="" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <link rel="icon" type="image/png" href="{% static 'blog/favicon.ico' %}" />
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <!--Custom css-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <!-- semantic UI -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-    <script src="{% static 'blog/js/vendor/jquery-3.7.0.js' %}"></script>
-    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
 
-    <link rel="manifest" href="site.webmanifest" />
-    <link rel="apple-touch-icon" href="icon.png" />
-    <!-- Place favicon.ico in the root directory -->
-    <link
-      rel="stylesheet"
-      href="{% static 'blog/css/vendor/bootstrap.min.css' %} "
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'blog/css/vendor/font-awesome.min.css' %}"
-    />
-    <link rel="stylesheet" href="{% static 'blog/css/vendor/animate.css' %}" />
-    <link
-      rel="stylesheet"
-      href="{% static 'blog/css/vendor/hamburgers.min.css' %}"
-    />
-    <link rel="stylesheet" href="{% static 'blog/css/util.css' %}" />
-    <link rel="stylesheet" href="{% static 'blog/css/normalize.css' %}" />
-    <link rel="stylesheet" href="{% static 'blog/css/main.css' %}" />
-  </head>
-  <body>
     {% block content %}
 
     <div class="container mt-5">
@@ -88,7 +44,7 @@
             "
           >
             <form method="POST" action="" enctype="multipart/form-data" >
-              {% csrf_token %} {{p_form.as_p}}
+              {% csrf_token %} {{p_form.content}} {{ p_form.post_image }}
 
               <hr />
               <div class="action p-2 pr-3">
@@ -101,6 +57,7 @@
                 </button>
               </div>
             </form>
+            
           </div>
 
           {% include 'blog/post-list.html' %}
@@ -152,34 +109,3 @@
     </div>
 
     {% endblock content %}
-
-    <script src=" {% static 'blog/js/vendor/modernizr-3.5.0.min.js' %}"></script>
-    <script src="{% static 'blog/js/vendor/jquery-3.7.0.js' %}"></script>
-    <script src="{% static 'blog/js/vendor/popper.min.js' %}"></script>
-    <script src="{% static 'blog/js/vendor/bootstrap.min.js' %}"></script>
-    <script src="{% static 'blog/js/vendor/tilt.jquery.min.js' %}"></script>
-    <script src="{% static 'blog/js/plugins.js' %}"></script>
-    <script>
-      $(".js-tilt").tilt({
-        scale: 1.1,
-      });
-    </script>
-    <script src="{% static 'blog/js/main.js' %}"></script>
-    <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-    <script>
-      window.ga = function () {
-        ga.q.push(arguments);
-      };
-      ga.q = [];
-      ga.l = +new Date();
-      ga("create", "UA-XXXXX-Y", "auto");
-      ga("send", "pageview");
-    </script>
-
-    <script
-      src="https://www.google-analytics.com/analytics.js"
-      async
-      defer
-    ></script>
-  </body>
-</html>

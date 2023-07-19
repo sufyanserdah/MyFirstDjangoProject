@@ -235,6 +235,12 @@ input.file {
     background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
     background: linear-gradient(-135deg, #c850c0, #4158d0);
 }
+.child {
+  /* ... */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 
 .wrap-login100 {
     width: 960px;
