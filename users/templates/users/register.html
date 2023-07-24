@@ -31,24 +31,25 @@
 
     <div class="limiter">
         <div class="container-login100">
-            <div class="wrap-login100" style="padding-top:113px">
-                <div class="login100-pic js-tilt" data-tilt>
+            <div class="wrap-login100" style="padding-top:4%">
+                <div class="login100-pic js-tilt" style="padding-top: 10%;" data-tilt>
                     <img src="{% static 'blog/img/img-01.png' %}" alt="IMG">
                 </div>
                 
                 <form class="login100-form validate-form" method = "POST" action="." id="register-form">
-                    {% if messages %}
+                    <!-- {% if messages %}
                         {% for message in messages %}
                             <div class="alert alert-{{ message.tags }} " >
                                 {{ message }}
                             </div>
                         {% endfor %}
-                    {% endif %}
+                    {% endif %} -->
                     {% csrf_token %}
                    
                     <span class="login100-form-title">
                         Register
                     </span>
+                    
                     <div class="wrap-input100 validate-input" data-validate="fullname is required">
                         
                     {{ form.username|as_crispy_field }}                        
@@ -93,7 +94,7 @@
                             Register
                         </button>
                     </div>
-
+                    
                     <div class="text-center p-t-35">
                         <a class="txt2" href="{% url 'blog-login' %}">
                             Log in

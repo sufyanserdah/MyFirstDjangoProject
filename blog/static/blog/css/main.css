@@ -86,7 +86,10 @@ a {
     -o-transition: all 0.4s;
     -moz-transition: all 0.4s;
 }
-
+strong{
+    position: absolute;
+    padding-left: 5%;
+}
 a:focus {
     outline: none !important;
 }
@@ -399,7 +402,7 @@ nav{
     text-align: center;
     width: 100%;
     display: block;
-    padding-bottom: 54px;
+    padding-bottom: 10%;
 }
 .login100-form-title:hover{
     animation-name: pulse;

@@ -1880,7 +1880,7 @@ select.form-control-lg:not([size]):not([multiple]) {
   height: calc(2.875rem + 2px);
 }
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 .form-text {
   display: block;
