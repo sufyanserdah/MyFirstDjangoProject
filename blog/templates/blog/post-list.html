@@ -1,4 +1,4 @@
-{% for post in posts %} {% if post.author.user in friends %}
+{% for post in posts %} {% if post.author.user in friends or post.author.user == user %}
 <div class="main-block post-with-photo" id="post-list">
   <div class="Post-Box">
     <div class="header row">

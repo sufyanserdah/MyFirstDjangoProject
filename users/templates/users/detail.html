@@ -1,11 +1,5 @@
 {% extends 'blog/base.html' %}
-
-
-{% block content %}
-<div class="ui grid" style="padding-left: 5%;">
-    <br>
-    <div class="row">
-        <div class="four wide column" style="margin-bottom: 1%;">
+ <div class="four wide column" style="margin-bottom: 1%;">
             <img class="ui medium rounded image" src="{{object.image.url}}">
              <span class="login100-form-title animated" style="   padding-bottom: 0px;  line-height: 2;">
 						{{object.user}}
@@ -53,7 +47,18 @@
             {% endif %}
 
         </div>
-        <div class="twelve wide column">
+
+{% block content %}
+
+<div class="container mt-5" style="width:70%">
+  <div class="row">
+    <div class="col">
+      <div class="main-block">
+<div class="ui grid" style="padding-left: 5%;">
+    <br>
+    <div class="row">
+       
+   
             {% if len_posts %}
                 {% include 'users/post-list2.html' %}
                 
@@ -132,7 +137,7 @@
 
 
             {% endif %}
-        </div>
+        
     </div>
-</div>
+</div></div></div></div></div>
 {% endblock content %}
