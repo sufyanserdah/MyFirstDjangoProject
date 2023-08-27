@@ -12,7 +12,7 @@
       </div>
     <div class="col-8 p-l-0">
         <div class="UserName d-inline-block mt-3" style="width: 144%">
-          <div style="display: inline-block">
+          <div style="display: inline-block; width: 35%;">
             <p>
               <a
                 href="{% url 'profile-detail-view' post.author.slug %}"
@@ -34,8 +34,9 @@
               >
             </p>
           </div>
-          <div style="display: inline; padding-left: 45%">
-            {% if request.user == post.author.user %}
+        
+          <div style="display: inline; padding-left: 30%">
+             {% if request.user == post.author.user %}
             <a href="{% url 'post-update' post.pk %}" style="padding: 5%"
               ><i class="fa fa-edit fa-2x"></i
             ></a>
@@ -44,6 +45,7 @@
             ></a>
             {% endif %}
           </div>
+           
         </div>
       </div>
     </div>
