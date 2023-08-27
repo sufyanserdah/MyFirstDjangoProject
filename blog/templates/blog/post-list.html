@@ -10,38 +10,40 @@
           ></div>
         </div>
       </div>
-      <div class="col-8 p-l-0">
-        <div class="UserName d-inline-block mt-3">
-          <p>
-            <a
-              href="{% url 'profile-detail-view' post.author.slug %}"
-              class="font-weight-bold"
-              >{{ post.author.user }}</a
-            >
-          </p>
-          <p class="lh-1-2">
-            {{ post.date_posted|date:"F d, Y" }}
-            <i
-              class="fa fa-globe fs-10"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Public"
-            ></i>
-            <br />
-            <a href=" {%url 'post-detail' post.id %} " class="fs-10"
-              >post-details</a
-            >
-          </p>
-        </div>
-        <div class="row">
-          {% if request.user == post.author.user %}
-          <a href="{% url 'post-update' post.pk %}"
-            ><button class="ui button bwhite-lg">Update</button></a
-          >
-          <a href="{% url 'post-delete' post.pk %}"
-            ><button class="ui button bwhite-lg">Delete</button></a
-          >
-          {% endif %}
+    <div class="col-8 p-l-0">
+        <div class="UserName d-inline-block mt-3" style="width: 144%">
+          <div style="display: inline-block">
+            <p>
+              <a
+                href="{% url 'profile-detail-view' post.author.slug %}"
+                class="font-weight-bold"
+                >{{ post.author.user }}</a
+              >
+            </p>
+            <p class="lh-1-2">
+              {{ post.date_posted|date:"F d, Y" }}
+              <i
+                class="fa fa-globe fs-10"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Public"
+              ></i>
+              <br />
+              <a href=" {%url 'post-detail' post.id%} " class="fs-10"
+                >post-details</a
+              >
+            </p>
+          </div>
+          <div style="display: inline; padding-left: 45%">
+            {% if request.user == post.author.user %}
+            <a href="{% url 'post-update' post.pk %}" style="padding: 5%"
+              ><i class="fa fa-edit fa-2x"></i
+            ></a>
+            <a href="{% url 'post-delete' post.pk %}"
+              ><i class="fa fa-trash fa-2x" aria-hidden="true"></i
+            ></a>
+            {% endif %}
+          </div>
         </div>
       </div>
     </div>

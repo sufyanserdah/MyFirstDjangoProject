@@ -10,12 +10,13 @@ class Post(models.Model):
     author = models.ForeignKey(User,on_delete=models.CASCADE)
     post_image = models.ImageField(null=True, blank=True, upload_to="images/")
     liked = models.ManyToManyField(Profile, blank=True, related_name='likes')
-    updated = models.DateTimeField( auto_now=True)
-    created = models.DateTimeField( auto_now_add=True)
+    updated = models.DateTimeField( default = timezone.now)
+    created = models.DateTimeField( default = timezone.now)
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts')
     def num_comments(self):
         return self.comment_set.all().count()
     def num_likes(self):
+        print(timezone.now)
         return self.liked.all().count()    
     def get_absolute_url(self):
         return reverse("blog-home")
@@ -35,8 +36,8 @@ class Comment(models.Model):
     body = models.CharField(max_length=300)
     liked = models.ManyToManyField(Post, blank=True, related_name='likes')
 
-    updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(default = timezone.now )
+    created = models.DateTimeField(default = timezone.now)
 
     def __str__(self):
         return str(self.pk)
@@ -50,8 +51,8 @@ class Like(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     value = models.CharField(choices=LIKE_CHOICES, max_length=8)
-    updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(default = timezone.now)
+    created = models.DateTimeField(default = timezone.now)
     
     def __str__(self):
         return f"{self.user}-{self.post}-{self.value}"
