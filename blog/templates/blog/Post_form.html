@@ -1,0 +1,25 @@
+<form hx-post="{% url 'blog-home' %}" id="post-form" action="" enctype="multipart/form-data" hx-target="#all_posts" >
+              {% csrf_token %} 
+              
+              {{p_form.content}}
+              <label
+                  style="position: absolute; width: 35%;  text-align: center;"
+                  class="float-r p-2 fs-16 post"
+
+                >
+                  Upload picture
+            </label>
+              {{ p_form.post_image }}
+
+              <hr />
+              <div class="action p-2 pr-3">
+                <button
+                  name="submit_p_form"
+                  type="submit"
+                  class="float-r p-2 fs-16 post"
+                  
+                >
+                  save
+                </button>
+              </div>
+            </form>

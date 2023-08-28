@@ -75,10 +75,24 @@ def home(request):
         if p_form.is_valid():
             instance = p_form.save(commit=False)
             instance.author = profile
-            instance.save()
+            instance.save() 
             p_form = PostModelForm()
 
             post_added = True
+            context = {
+        "posts": Post.objects.all().order_by("-date_posted"),
+        "user": request.user,
+        "pos": profile.get_posts_no,
+        "im": Profile.objects.filter(user=request.user),
+        "profile": profile,
+        "friends": profile.get_friends(),
+        "nofriend": c,
+        "p_form": p_form,
+        "c_form": c_form,
+        "post_added": post_added,
+    }
+            return render(request, "blog/post-list.html",context)
+
     if "submit_c_form" in request.POST:
         c_form = CommentModelForm(request.POST)
 
@@ -126,6 +140,9 @@ def profile(request):
             p_form = PostModelForm()
 
             post_added = True
+            
+            
+
     if "submit_c_form" in request.POST:
         c_form = CommentModelForm(request.POST)
 
@@ -139,6 +156,7 @@ def profile(request):
         if form.is_valid():
             form.save()
             confirm = True
+            
     context = {
         "posts": profile.get_all_authors_posts(),
         "user": request.user,

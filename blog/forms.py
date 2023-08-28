@@ -18,6 +18,7 @@ class PostModelForm(forms.ModelForm):
             "type":"text",
             "name":"cont",
             "id":"cont", 
+            
             "placeholder":"What about today?",
             
             
@@ -26,7 +27,8 @@ class PostModelForm(forms.ModelForm):
         self.fields["post_image"].help_text = None
         self.fields['post_image'].label = ""
         self.fields["post_image"].widget.attrs.update({
-            
+            "name":"post_image",
+            "id":"post_image", 
             "style":"opacity:0; height: 40px; width: 200px;",
             
             
