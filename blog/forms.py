@@ -25,7 +25,15 @@ class PostModelForm(forms.ModelForm):
         })
         self.fields["post_image"].help_text = None
         self.fields['post_image'].label = ""
-        
+        self.fields["post_image"].widget.attrs.update({
+            
+            "style":"opacity:0; height: 40px; width: 200px;",
+            
+            
+            
+            
+            
+        })
         
     class Meta:
         model = Post

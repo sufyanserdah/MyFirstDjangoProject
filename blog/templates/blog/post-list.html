@@ -82,10 +82,12 @@
                 box-shadow: none;
               "
               type="submit"
+              id="like-button"
+              value="{{post.id}}"
             >
               <p class="py-2 footer-btn" style="padding-left: 90px">
                 <i class="fa fa-heart-o" aria-hidden="true"></i>
-                <span class="px-1"> {{ post.num_likes }} Likes</span>
+                <span class="px-1" id="like_count"> {{ post.num_likes }} Likes</span>
               </p>
             </button>
             {% else %}
@@ -95,8 +97,10 @@
                 border: none;
                 box-shadow: none;
               "
-              type="submit"
-            >
+              type="submit" 
+              id="like-button"
+              value="{{post.id}}"
+              >
               <p class="py-2 footer-btn" style="padding-left: 90px">
                 <i
                   class="fa fa-heart-o"

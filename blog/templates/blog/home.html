@@ -18,7 +18,17 @@
             "
           >
             <form method="POST" action="" enctype="multipart/form-data" >
-              {% csrf_token %} {{p_form.content}} {{ p_form.post_image }}
+              {% csrf_token %} 
+              
+              {{p_form.content}}
+              <label
+                  style="position: absolute; width: 35%;  text-align: center;"
+                  class="float-r p-2 fs-16 post"
+
+                >
+                  Upload picture
+            </label>
+              {{ p_form.post_image }}
 
               <hr />
               <div class="action p-2 pr-3">
@@ -26,6 +36,7 @@
                   name="submit_p_form"
                   type="submit"
                   class="float-r p-2 fs-16 post"
+                  
                 >
                   save
                 </button>
@@ -81,5 +92,25 @@
         </div>
       </div>
     </div>
-
+    <!-- <script>
+      $(document).on('click', '#like-button', function (e) {
+    e.preventDefault();
+    $.ajax({
+      type: 'POST',
+      url: '{% url "like-post-view" %}',
+      data: {
+        postid: $('#like-button').val(),
+        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+        action: 'post'
+      },
+      success: function (json) {
+        console.log("kkkkfofofofof")
+        document.getElementById("like_count").innerHTML = json['result']
+      },
+      error: function (xhr, errmsg, err) {
+          console.log('oooooooooooooooooooooooooooo')
+      }
+    });
+  })
+    </script> -->
     {% endblock content %}

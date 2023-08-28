@@ -36,134 +36,133 @@
  
     {% block content %}
 
-    <div class="container mt-5">
-      <div class="row">
-        <div style="padding-left: 20%; width: 100%; padding-right: 20%">
+    
+<div class="main-block post-with-photo" id="post-list" style="max-width: 74%;">
+  <div class="Post-Box">
+    <div class="header row" style="width: 100%">
+      <div class="col-1" style="padding-right: 9%; padding-top: 1%">
+        <div class="pt-2 pl-2 d-inline-block">
           <div
-            class="main-block post-with-photo"
-            id="post-list"
-            style="align-items: center"
-          >
-            <div class="Post-Box">
-              <div class="header row">
-                <div class="col-1" style="padding-right: 10%;padding-top: 1.7%;">
-                  <div class="pt-2 pl-2 d-inline-block">
-                    <div
-                      class="Profile-Picture"
-                      style="background: url('{{ post.author.image.url }}') "
-                    ></div>
-                  </div>
-                </div>
+            class="Profile-Picture"
+            style="background: url('{{ post.author.image.url }}') "
+          ></div>
+        </div>
+      </div>
 
-                <div class="col-8 p-l-0">
-                  <div class="UserName d-inline-block mt-3" style="width: 144%">
-                    <div style="display: inline-block">
-                      <p>{{post.author.user}}</p>
-                      <p class="lh-1-2">
-                        {{ post.date_posted|date:"F d, Y" }}
-                        <i
-                          class="fa fa-globe fs-10"
-                          data-toggle="tooltip"
-                          data-placement="top"
-                          title="Public"
-                        ></i>
-                        <br />
-                        <a href=" {%url 'post-detail' post.id%} " class="fs-10"
-                          >post-details</a
-                        >
-                      </p>
-                    </div>
-                    <div style="display: inline; padding-left: 55%">
-                      {% if request.user == post.author.user %}
-                      <a
-                        href="{% url 'post-update' post.pk %}"
-                        style="padding: 5%"
-                        ><i class="fa fa-edit fa-2x"></i
-                      ></a>
-                      <a href="{% url 'post-delete' post.pk %}"
-                        ><i class="fa fa-trash fa-2x" aria-hidden="true"></i
-                      ></a>
-                      {% endif %}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <hr class="m-2" />
+      <div class="col-8 p-l-0">
+        <div class="UserName d-inline-block mt-3" style="width: 144%">
+          <div style="display: inline-block; width: 35%;">
+            <p>
+              <a
+                href="{% url 'profile-detail-view' post.author.slug %}"
+                class="font-weight-bold"
+                >{{ post.author.user }}</a
+              >
+            </p>
+            <p class="lh-1-2">
+              {{ post.date_posted|date:"F d, Y" }}
+              <i
+                class="fa fa-globe fs-10"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Public"
+              ></i>
+              <br />
+              <a href=" {%url 'post-detail' post.id%} " class="fs-10"
+                >post-details</a
+              >
+            </p>
+          </div>
+        
+          <div style="display: inline; padding-left: 42%">
+             {% if request.user == post.author.user %}
+            <a href="{% url 'post-update' post.pk %}" style="padding: 5%"
+              ><i class="fa fa-edit fa-2x"></i
+            ></a>
+            <a href="{% url 'post-delete' post.pk %}"
+              ><i class="fa fa-trash fa-2x" aria-hidden="true"></i
+            ></a>
+            {% endif %}
+          </div>
+           
+        </div>
+      </div>
+    </div>
+    <hr class="m-2" />
 
-              <div class="details col">
-                <p class="px-3" style="padding: 10px">{{ post.content }}</p>
-              </div>
+    <div class="details col">
+      <p class="px-3" style="padding: 10px">{{ post.content }}</p>
+    </div>
 
-              {% if post.post_image %}
+    {% if post.post_image %}
 
-              <div class="col" style="width: auto; text-align: center">
-                <img
-                  src="{{ post.post_image.url }}"
-                  alt=""
-                  style="max-width: 50%; height: auto"
-                />
-              </div>
+    <div class="col" style="width: auto; text-align: center">
+      <img
+        src="{{ post.post_image.url }}"
+        alt=""
+        style="max-width: 50%; height: auto"
+      />
+    </div>
 
-              {% endif %}
-            </div>
-            <hr class="mt-0 mb-0" />
-            <div class="footer">
-              <div class="row action-btn">
-                <div class="col">
-                  <form method="POST" action="{% url 'like-post-view' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="post_id" value="{{ post.id }}" />
-                    {% if profile not in post.liked.all %}
-                    <button
-                      style="
-                        background-color: transparent;
-                        border: none;
-                        box-shadow: none;
-                      "
-                      type="submit"
-                    >
-                      <p class="py-2 footer-btn" style="padding-left: 90px">
-                        <i class="fa fa-heart-o" aria-hidden="true"></i>
-                        <span class="px-1"> {{ post.num_likes }} Likes</span>
-                      </p>
-                    </button>
-                    {% else %}
-                    <button
-                      style="
-                        background-color: transparent;
-                        border: none;
-                        box-shadow: none;
-                      "
-                      type="submit"
-                    >
-                      <p class="py-2 footer-btn" style="padding-left: 90px">
-                        <i
-                          class="fa fa-heart-o"
-                          aria-hidden="true"
-                          style="color: red"
-                        ></i>
-                        <span class="px-1"> {{ post.num_likes }} Likes</span>
-                      </p>
-                    </button>
-                    {% endif %}
-                  </form>
-                </div>
-                <div class="col border-left">
-                  <p class="py-2 footer-btn text-center">
-                    <a href=""
-                      ><i class="fa fa-comment-o" aria-hidden="true"></i>
-                      <span class="px-1"> Comment</span></a
-                    >
-                  </p>
-                </div>
-              </div>
-              <hr class="mt-0 mb-2" />
-              <div class="row comment-list">
-                
-                {% for c in post.comment_set.all %}
+    {% endif %}
+
+    <hr class="mt-0 mb-0" />
+    <div class="footer">
+      <div class="row action-btn">
+        <div class="col">
+          <form method="POST" action="{% url 'like-post-view' %}">
+            {% csrf_token %}
+            <input type="hidden" name="post_id" value="{{ post.id }}" />
+            {% if profile not in post.liked.all %}
+            <button
+              style="
+                background-color: transparent;
+                border: none;
+                box-shadow: none;
+              "
+              type="submit"
+            >
+              <p class="py-2 footer-btn" style="padding-left: 90px">
+                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                <span class="px-1"> {{ post.num_likes }} Likes</span>
+              </p>
+            </button>
+            {% else %}
+            <button
+              style="
+                background-color: transparent;
+                border: none;
+                box-shadow: none;
+              "
+              type="submit"
+            >
+              <p class="py-2 footer-btn" style="padding-left: 90px">
+                <i
+                  class="fa fa-heart-o"
+                  aria-hidden="true"
+                  style="color: red"
+                ></i>
+                <span class="px-1"> {{ post.num_likes }} Likes</span>
+              </p>
+            </button>
+            {% endif %}
+          </form>
+        </div>
+        <div class="col border-left">
+          <p class="py-2 footer-btn text-center">
+            <a href=""
+              ><i class="fa fa-comment-o" aria-hidden="true"></i>
+              <span class="px-1"> Comment</span></a
+            >
+          </p>
+        </div>
+      </div>
+      <hr class="mt-0 mb-2" />
+      <div class="row comment-list">
+       {% for c in post.comment_set.all %}
         <div class="add-comment col-12 pt-0">
           <div class="row">
-            <div class="col-1" style="padding-right: 9%; padding-top: 1%;">
+            <div class="col-1" style="padding-right: 6%; padding-top: 0.9%;">
               <div class="pt-2 pl-2 d-inline-block">
                 <div
                   class="Profile-Picture-Comment"
@@ -194,54 +193,42 @@
           </div>
         </div>
         {% endfor %}
-                <div class="add-comment col-12 pb-2">
-                  <div class="row">
-                    <div class="col-1" style="padding-right: 9%">
-                      <div class="pt-2 pl-2 d-inline-block">
-                        <div
-                          class="Profile-Picture-Comment"
-                          style="background: url('{{ user.profile.image.url }}'); "
-                        ></div>
-                      </div>
-                    </div>
-                    <div class="col-10 pl-0">
-                      <div class="row pr-2 pt-2 pb-2 pl-0" style="width: 100%;">
-                        <div class="col pl-0">
-                          <form
-                            method="POST"
-                            action=""
-                            enctype="multipart/form-data"
-                          >
-                            {% csrf_token %}
-                            <input
-                              type="hidden"
-                              name="post_id"
-                              value="{{post.id}}"
-                            />
-                            <div
+        <div class="add-comment col-12 pb-2">
+          <div class="row">
+            <div class="col-1" style="padding-right: 7%">
+              <div class="pt-2 pl-2 d-inline-block">
+                <div
+                  class="Profile-Picture-Comment"
+                  style="background: url('{{ user.profile.image.url }}'); "
+                ></div>
+              </div>
+            </div>
+            <div class="col-10 pl-0">
+              <div class="row pr-2 pt-2 pb-2 pl-0">
+                <div class="col pl-0">
+                  <form method="POST" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="post_id" value="{{post.id}}" />
+                    <div
                       style="
                         border-radius: 25px;
                         border: 1px solid #c6c8ca;
-                        width: 107%;
+                        width: 110%;
                       "
                     >
                       {{c_form}}
                     </div>
-                            <div class="action p-2 pr-3" style="width: 109%;">
-                              <button
-                                type="submit"
-                                class="float-r p-2 fs-16 post"
-                                name="submit_c_form"
-                                style="width: 100px; padding-left: 10%;"
-                              >
-                                Comment
-                              </button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
+                    <div class="action p-2 pr-3" style="width: 110%">
+                      <button
+                        type="submit"
+                        class="float-r p-2 fs-16 post"
+                        name="submit_c_form"
+                        style="width: 100px"
+                      >
+                        Comment
+                      </button>
                     </div>
-                  </div>
+                  </form>
                 </div>
               </div>
             </div>
@@ -249,6 +236,9 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+
 
     {% endblock %}
 

@@ -19,7 +19,7 @@ from django.views.generic import (
     View,
 )
 from .forms import ProfileModelForm, PostModelForm, CommentModelForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 
 
 @login_required
