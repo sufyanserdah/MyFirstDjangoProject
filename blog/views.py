@@ -103,6 +103,19 @@ def home(request):
             instance.save()
 
             c_form = CommentModelForm()
+            context = {
+        "posts": Post.objects.all().order_by("-date_posted"),
+        "user": request.user,
+        "pos": profile.get_posts_no,
+        "im": Profile.objects.filter(user=request.user),
+        "profile": profile,
+        "friends": profile.get_friends(),
+        "nofriend": c,
+        "p_form": p_form,
+        "c_form": c_form,
+        "post_added": post_added,
+    }
+            return render(request, "blog/post-list.html",context)
     context = {
         "posts": Post.objects.all().order_by("-date_posted"),
         "user": request.user,

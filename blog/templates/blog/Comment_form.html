@@ -1,0 +1,23 @@
+<form hx-post="{% url 'blog-home' %}" hx-target="#all_posts"  action="" enctype="multipart/form-data" id="f" name="f">
+                    {% csrf_token %}
+                    <input type="hidden" name="post_id" value="{{post.id}}" />
+                    <div
+                      style="
+                        border-radius: 25px;
+                        border: 1px solid #c6c8ca;
+                        width: 100%;
+                      "
+                    >
+                      {{c_form}}
+                    </div>
+                    <div class="action p-2 pr-3">
+                      <button
+                        type="submit"
+                        class="float-r p-2 fs-16 post"
+                        name="submit_c_form"
+                        style="width: 100px"
+                      >
+                        Comment
+                      </button>
+                    </div>
+                  </form>

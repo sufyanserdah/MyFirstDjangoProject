@@ -1,4 +1,4 @@
-<form hx-post="{% url 'blog-home' %}" id="post-form" action="" enctype="multipart/form-data" hx-target="#all_posts" >
+<form hx-post="{% url 'blog-home' %}" id="post-form" action="" enctype="multipart/form-data" hx-target="#all_posts"   hx-on="htmx:afterRequest:this.clear()" >
               {% csrf_token %} 
               
               {{p_form.content}}
@@ -12,6 +12,7 @@
               {{ p_form.post_image }}
 
               <hr />
+             
               <div class="action p-2 pr-3">
                 <button
                   name="submit_p_form"
