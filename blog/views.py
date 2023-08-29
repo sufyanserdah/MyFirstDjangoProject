@@ -25,6 +25,36 @@ from django.http import HttpResponseRedirect, JsonResponse
 @login_required
 def like_unlike_post(request):
     user = request.user
+    ordering = ["-date_posted"]
+    profile = Profile.objects.get(user=request.user)
+    nopro = Profile.objects.exclude(user=request.user)    
+    p_form = PostModelForm()
+    c_form = CommentModelForm()
+    post_added = False
+    a = Profile.objects.all()
+
+    a = set(a)
+
+    b = set(profile.get_friends2())
+    c = a.difference(b)
+    print(type(a))
+    print(type(b))
+    print(type(c))
+    print(a)
+    print(b)
+    print( bool(c) )
+    context = {
+        "posts": Post.objects.all().order_by("-date_posted"),
+        "user": request.user,
+        "pos": profile.get_posts_no,
+        "im": Profile.objects.filter(user=request.user),
+        "profile": profile,
+        "friends": profile.get_friends(),
+        "nofriend": c,
+        "p_form": p_form,
+        "c_form": c_form,
+        "post_added": post_added,
+    }
     if request.method == "POST":
         post_id = request.POST.get("post_id")
         post_obj = Post.objects.get(id=post_id)
@@ -43,7 +73,8 @@ def like_unlike_post(request):
             like.save()
         else:
             like.value = "Like"
-    return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
+
+        return render(request, "blog/post-list.html",context)
 
 
 @login_required
