@@ -13,6 +13,7 @@ urlpatterns = [
     path('liked_profile/', views.like_unlike_post_profile,name='like-post-view-profile' ),
     path('liked_post/<int:pk>/', views.like_unlike_post_detail,name='like-post-view-post-detail' ),
     path('liked_post_list/<int:pk>/', views.like_unlike_post_list2,name='like-post-view-post-list2' ),
+    path('liked_post_search/<str:s>/', views.like_unlike_post_search,name='like-post-search' ),
   
     path('<pk>/delete/', PostDeleteView.as_view(), name="post-delete"),
     path('<pk>/update/', PostUpdateView.as_view(), name="post-update"),

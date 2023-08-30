@@ -406,6 +406,53 @@ def like_unlike_post_list2(request,pk):
         print(user1)
         return render(request, "users/post-list2.html",context)
 
+
+@login_required
+def like_unlike_post_search(request, s):
+    searched = s
+    posts= Post.objects.filter(content__icontains=searched)
+    users = User.objects.filter(username__icontains=searched )
+    
+    user = request.user
+    profile = Profile.objects.get(user=request.user)
+    c_form = CommentModelForm()
+    post_added = False
+
+    context = {
+        "user": request.user,
+        "pos": profile.get_posts_no,
+        "im": Profile.objects.filter(user=request.user),
+        "profile": profile,
+        "friends": profile.get_friends(),
+        "c_form": c_form,
+        "post_added": post_added,
+        "posts": posts ,
+        "searched":searched, 
+        'users':users
+    }
+    if request.method == "POST":
+        post_id = request.POST.get("post_id")
+        post_obj = Post.objects.get(id=post_id)
+        profile = Profile.objects.get(user=user)
+        if profile in post_obj.liked.all():
+            post_obj.liked.remove(profile)
+        else:
+            post_obj.liked.add(profile)
+        like, created = Like.objects.get_or_create(user=profile, post_id=post_id)
+        if not created:
+            if like.value == "Like":
+                like.value = "Unlike"
+            else:
+                like.value = "Like"
+            post_obj.save()
+            like.save()
+        else:
+            like.value = "Like"
+
+        return render(request, "blog/post_results.html",context)
+
+
+
 def search_post(request):
     
     if request.method == "POST":
