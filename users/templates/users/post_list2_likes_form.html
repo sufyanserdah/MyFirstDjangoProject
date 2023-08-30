@@ -1,0 +1,41 @@
+<form hx-post ="{% url 'like-post-view-post-list2' post.id %}" hx-target="#list"  >
+                      {% csrf_token %}
+                      <input
+                        type="hidden"
+                        name="post_id"
+                        value="{{ post.id }}"
+                      />
+                      {% if profile1 not in post.liked.all %}
+                      <button
+                        style="
+                          background-color: transparent;
+                          border: none;
+                          box-shadow: none;
+                        "
+                        type="submit"
+                      >
+                        <p class="py-2 footer-btn" style="padding-left: 90px">
+                          <i class="fa fa-heart-o" aria-hidden="true"></i>
+                          <span class="px-1"> {{ post.num_likes }} Likes</span>
+                        </p>
+                      </button>
+                      {% else %}
+                      <button
+                        style="
+                          background-color: transparent;
+                          border: none;
+                          box-shadow: none;
+                        "
+                        type="submit"
+                      >
+                        <p class="py-2 footer-btn" style="padding-left: 90px">
+                          <i
+                            class="fa fa-heart-o"
+                            aria-hidden="true"
+                            style="color: red"
+                          ></i>
+                          <span class="px-1"> {{ post.num_likes }} Likes</span>
+                        </p>
+                      </button>
+                      {% endif %}
+                    </form>

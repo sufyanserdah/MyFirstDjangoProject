@@ -21,7 +21,6 @@ from django.views.generic import (
 from .forms import ProfileModelForm, PostModelForm, CommentModelForm
 from django.http import HttpResponseRedirect, JsonResponse
 
-
 @login_required
 def like_unlike_post(request):
     user = request.user
@@ -222,6 +221,190 @@ def profile(request):
 
     return render(request, "blog/profile.html", context)
 
+@login_required
+def like_unlike_post_profile(request):
+    user = request.user
+    
+    ordering = ["-date_posted"]
+    profile = Profile.objects.get(user=request.user)
+    nopro = Profile.objects.exclude(user=request.user)    
+    p_form = PostModelForm()
+    c_form = CommentModelForm()
+    post_added = False
+    a = Profile.objects.all()
+
+    a = set(a)
+
+    b = set(profile.get_friends2())
+    c = a.difference(b)
+    print(type(a))
+    print(type(b))
+    print(type(c))
+    print(a)
+    print(b)
+    print( bool(c) )
+    form = ProfileModelForm(
+        request.POST or None, request.FILES or None, instance=profile
+    )
+    confirm = False
+
+    context = {
+        "posts": profile.get_all_authors_posts(),
+        "user": request.user,
+        "im": Profile.objects.filter(user=request.user),
+        "profile": profile,
+        "friends": profile.get_friends(),
+        "p_form": p_form,
+        "c_form": c_form,
+        "post_added": post_added,
+        "pos": profile.get_posts_no,
+        
+        "form": form,
+        "confirm": confirm,
+    }
+    if request.method == "POST":
+        post_id = request.POST.get("post_id")
+        post_obj = Post.objects.get(id=post_id)
+        profile = Profile.objects.get(user=user)
+        if profile in post_obj.liked.all():
+            post_obj.liked.remove(profile)
+        else:
+            post_obj.liked.add(profile)
+        like, created = Like.objects.get_or_create(user=profile, post_id=post_id)
+        if not created:
+            if like.value == "Like":
+                like.value = "Unlike"
+            else:
+                like.value = "Like"
+            post_obj.save()
+            like.save()
+        else:
+            like.value = "Like"
+        print("dfks;kfdslsd")
+        return render(request, "blog/user-post-list.html",context)
+
+@login_required
+def like_unlike_post_detail(request, pk):
+    user = request.user
+
+    ordering = ["-date_posted"]
+    post = Post.objects.filter(pk=pk)
+    profile = Profile.objects.get(user=request.user)
+    nopro = Profile.objects.exclude(user=request.user)
+    print(pk)
+    print(post)
+    form = ProfileModelForm(
+        request.POST or None, request.FILES or None, instance=profile
+    )
+    confirm = False
+    
+    c_form = CommentModelForm()
+    post_added = False
+
+    if "submit_c_form" in request.POST:
+        c_form = CommentModelForm(request.POST)
+
+        if c_form.is_valid():
+            instance = c_form.save(commit=False)
+            instance.user = profile
+            instance.post = Post.objects.get(id=pk)
+            instance.save()
+
+            c_form = CommentModelForm()
+    context = {
+        "user": request.user,
+        "pos": profile.get_posts_no,
+        "profile": profile,
+
+        "c_form": c_form,
+        "post_added": post_added,
+        
+        "post": post.get ,
+        "posts": profile.get_all_authors_posts(),
+        "user": request.user,
+        "im": Profile.objects.filter(user=request.user),
+        "friends": profile.get_friends(),
+        "c_form": c_form,
+        "post_added": post_added,
+        "pos": profile.get_posts_no,
+        
+        "form": form,
+        "confirm": confirm,
+        
+    }
+    if request.method == "POST":
+        post_id = request.POST.get("post_id")
+        post_obj = Post.objects.get(id=post_id)
+        profile = Profile.objects.get(user=user)
+        if profile in post_obj.liked.all():
+            post_obj.liked.remove(profile)
+        else:
+            post_obj.liked.add(profile)
+        like, created = Like.objects.get_or_create(user=profile, post_id=post_id)
+        if not created:
+            if like.value == "Like":
+                like.value = "Unlike"
+            else:
+                like.value = "Like"
+            post_obj.save()
+            like.save()
+        else:
+            like.value = "Like"
+        print("dfks;kfdslsd")
+        return render(request, "blog/post_detail_body.html",context)
+
+
+@login_required
+def like_unlike_post_list2(request,pk):
+    
+    post = Post.objects.filter(pk=pk)
+    user1 = post[0].author.user
+    ordering = ["-date_posted"]
+    profile = Profile.objects.get(user=user1)
+    c_form = CommentModelForm()
+
+
+    form = ProfileModelForm(
+        request.POST or None, request.FILES or None, instance=profile
+    )
+    confirm = False
+    user2 = request.user
+    profile1 = Profile.objects.get(user=user2)
+    context = {
+        "posts": profile.get_all_authors_posts(),
+        "user": request.user,
+        "im": Profile.objects.filter(user=user1),
+        "profile": profile,
+        "profile1":profile1,
+        "friends": profile.get_friends(),
+        "c_form": c_form,
+        "pos": profile.get_posts_no,
+        
+        "form": form,
+        "confirm": confirm,
+    }
+    if request.method == "POST":
+        post_id = request.POST.get("post_id")
+        post_obj = Post.objects.get(id=post_id)
+        
+        print(profile1)
+        if profile1 in post_obj.liked.all():
+            post_obj.liked.remove(profile1)
+        else:
+            post_obj.liked.add(profile1)
+        like, created = Like.objects.get_or_create(user=profile1, post_id=post_id)
+        if not created:
+            if like.value == "Like":
+                like.value = "Unlike"
+            else:
+                like.value = "Like"
+            post_obj.save()
+            like.save()
+        else:
+            like.value = "Like"
+        print("dfks;kfdslsd")
+        print(user1)
+        return render(request, "users/post-list2.html",context)
 
 def search_post(request):
     
