@@ -31,7 +31,7 @@ class PostModelForm(forms.ModelForm):
             "name":"post_image",
             "id":"post_image", 
            
-            "style":"opacity:0%; height: 40px; width: 200px;",
+            "style":"opacity:0%; height: 40px; width: 29px; margin-left:5%;position: absolute;",
             
             
             
