@@ -62,6 +62,7 @@ class CommentModelForm(forms.ModelForm):
             "type":"text",
             "name":"fullname",
             "placeholder":"What about today?",
+            "width":"100%",
             
             
             
