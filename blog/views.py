@@ -529,7 +529,7 @@ def like_unlike_post_list2(request,pk):
 
 @login_required
 def like_unlike_post_search(request, s):
-    print(searched+"  fdsfdsfds")
+    
     searched = s
     
     posts= Post.objects.filter(content__icontains=searched)

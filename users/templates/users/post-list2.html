@@ -1,4 +1,4 @@
-<div id="list" >
+<div id="list" style="background: #f3f5f7; border: none;" >
 {% for post in posts %}
             {% if post.post_image %}
           <div class="main-block post-with-photo" style="border: none;" id="post-list">
@@ -35,7 +35,7 @@
                       >
                     </p>
                   </div>
-                 <div style="display: inline; padding-left: 60%">
+                 <div style="display: inline; padding-left: 57%">
             {% if request.user == post.author.user %}
             <a href="{% url 'post-update' post.pk %}" style="padding: 5%"
               ><i class="fa fa-edit fa-2x"></i
@@ -115,8 +115,8 @@
               </div>
             </div>
             {% else %}
-             <div class="main-block post-with-photo" style="border: none; width: 100%;" id="post-list">
-            <div class="Post-Box" style="width: 285%;" >
+             <div class="main-block " style="border: none; width: 100%; " id="post-list">
+            <div class="Post-Box" style="width: 100%;" >
               <div class="header row" style="width: 144%">
                 <div class="col-1" style=" padding-top: 1%;">
                   <div class="pt-2 pl-2 d-inline-block">

@@ -84,45 +84,58 @@
     {% for obj in qs %}
         <div class="ui segment" style="margin:20px">
             <div class="ui grid" >
-                <div class="row" style="padding: 20px;margin:20px">
+                <div class="row" style="padding: 20px;margin:20px;height:90px">
                     
-                    <div class="three wide column">
-                        <img class="ui small circular image" src="{{obj.image.url}}">
-                    </div>
+                    <div
+              
+              style="background: url('{{ obj.image.url }}');border-radius: 50%;
+    height: 70px;
+    width: 70px;
+    margin-left: -25px;
+    margin-top: -23px;
+    border: 3px solid #8B54C7;
+    background-size: cover !important;
+    background-position: center top !important;"
+            ></div>
                     
-                    <div class="thirteen wide column" >
-                        <span class="login100-form-title animated" style="display: inline;   padding-left: 1%;  line-height: 2;">
-						{{obj.user}}
+                    <div class="thirteen wide column"  style="display: inline; margin-top: -5%;">
+                        <span  style=" width: 100% ; height: 55px; display: inline;font-family: Poppins-Bold;   padding-left: 1%;  line-height: 2; font-size:x-large;display: inline-block; ">
+					<p class="login100-form-title animated" style="display: inherit;font-family: Poppins-Bold;
+    font-size: 24px;
+    color: #333333;
+    line-height: 1.2; width: auto;"> {{obj.user}} </p>	
+            {% if obj.user not in rel_receiver and obj.user not in rel_sender %}
+                            <form action=" {% url 'send-invite' %} " method="POST" style="display: inherit; margin-left: 3.5%;">
+                                {% csrf_token %}
+                                <input type="hidden" name="profile_pk" value="{{obj.pk}}">
+                                <button type="submit" class="ui positive basic button mb-5 "><i class="fa fa-user-plus" aria-hidden="true"></i></button>
+                            </form>
+                         {% endif %}
+
+                        {% if obj.user in rel_receiver and request.user not in obj.friends.all %}
+                            <button class="ui disabled button mb-5 " style="margin-left: 3.5%;" ><i class="fa fa-clock-o" aria-hidden="true"></i></button>
+                        {% endif %}
+
+                        {% if request.user in obj.friends.all %}
+                        <form action="{% url 'remove-friend' %}" method="POST" style="display: inherit;margin-left: 3.5%;">
+                            {% csrf_token %}
+                            <input type="hidden" name="profile_pk" value="{{obj.pk}}">
+                            <button type="submit" class="ui negative basic button mb-5 "><i class="fa fa-user-times" aria-hidden="true"></i></button>
+                        </form>
+                        {% endif %}
 					</span>
                         
-                        <div class="container-login100-form-btn" style="justify-content: left;">
+                        <div  style="justify-content: left;width: 100%;display: inline;
+    display: -webkit-box;">
                              <a href="{{obj.get_absolute_url}}">
-                            <button class="login100-form-btn">
+                            <button class="login100-form-btn" style="display: inline-block; height: 40px;">
                                 See profile
                             </button></a>
                         </div>
                         <br>
                         
 
-                        {% if obj.user not in rel_receiver and obj.user not in rel_sender %}
-                            <form action=" {% url 'send-invite' %} " method="POST">
-                                {% csrf_token %}
-                                <input type="hidden" name="profile_pk" value="{{obj.pk}}">
-                                <button type="submit" class="ui positive basic button mb-5 w-big"><i class="plus square icon"></i>Add to friends</button>
-                            </form>
-                         {% endif %}
-
-                        {% if obj.user in rel_receiver and request.user not in obj.friends.all %}
-                            <button class="ui disabled button mb-5 w-big"><i class="user icon"></i>Waiting for approval</button>
-                        {% endif %}
-
-                        {% if request.user in obj.friends.all %}
-                        <form action="{% url 'remove-friend' %}" method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="profile_pk" value="{{obj.pk}}">
-                            <button type="submit" class="ui negative basic button mb-5 w-big"><i class="minus square icon"></i>Remove from friends</button>
-                        </form>
-                        {% endif %}
+                        
                     </div>
 
                 </div>

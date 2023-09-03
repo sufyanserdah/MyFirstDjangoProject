@@ -48,6 +48,11 @@ class ProfileModelForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('image','bgimage')
+        
+        
+        
+        
+        
 class CommentModelForm(forms.ModelForm):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
