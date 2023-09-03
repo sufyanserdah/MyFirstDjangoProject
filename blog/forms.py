@@ -45,6 +45,7 @@ class PostModelForm(forms.ModelForm):
        
         
 class ProfileModelForm(forms.ModelForm):
+     
     class Meta:
         model = Profile
         fields = ('image','bgimage')
@@ -62,12 +63,12 @@ class CommentModelForm(forms.ModelForm):
         self.fields['body'].label = ""
         self.fields["body"].widget.attrs.update({
             "class":"p-2 fs-14 pl-3",
-            "style":" background:transparent",
+            "style":" background:transparent; width:100%;",
             "id":"fullname",
             "type":"text",
             "name":"fullname",
             "placeholder":"What about today?",
-            "width":"100%",
+            
             
             
             

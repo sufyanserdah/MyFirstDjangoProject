@@ -1,5 +1,5 @@
 {% if not posts %}
-              <div id="notfound" style="position: relative; height: 100vh">
+              <div id="notfound" style="position: relative; height: 30vh">
                 <div
                   class="notfound"
                   style="
@@ -23,14 +23,14 @@
                     <h1
                       style="
                         font-family: 'Montserrat', sans-serif;
-                        font-size: 236px;
+                        font-size: 150px;
                         font-weight: 200;
                         margin: 0px;
                         color: #211b19;
                         text-transform: uppercase;
                         position: absolute;
                         left: 50%;
-                        top: 50%;
+                        top: 55%;
                         -webkit-transform: translate(-50%, -50%);
                         -ms-transform: translate(-50%, -50%);
                         transform: translate(-50%, -50%);
@@ -41,7 +41,7 @@
                     <h2
                       style="
                         font-family: 'Montserrat', sans-serif;
-                        font-size: 20px;
+                        font-size: 17px;
                         font-weight: 400;
                         text-transform: uppercase;
                         color: #211b19;
@@ -50,21 +50,19 @@
                         margin: auto;
                         display: inline-block;
                         position: absolute;
-                        bottom: 0px;
-                        left: 0;
-                        right: 0;
-                        width: 168%;
-                        margin-left: -35%;
+                        top: 75%;
+    width: 231%;
+    margin-left: -65%;
                       "
                     >
-                      You currently have no posts!
+                      You currently have no posts
                     </h2>
                   </div>
-                  <div class="container-login100-form-btn">
-                    <a href="{% url 'blog-home' %}">
-                      <button class="login100-form-btn">
+                  <div class="container-login100-form-btn" style="opacity: 0%;">
+                    <a>
+                      <input type="hidden" class="login100-form-btn">
                         Back to HomePage
-                      </button></a
+                      </a
                     >
                   </div>
                 </div>

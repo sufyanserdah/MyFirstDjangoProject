@@ -107,6 +107,7 @@ def profile(request):
     form = ProfileModelForm(
         request.POST or None, request.FILES or None, instance=profile
     )
+
     confirm = False
 
     c_form = CommentModelForm()
