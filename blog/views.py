@@ -107,7 +107,7 @@ def profile(request):
     form = ProfileModelForm(
         request.POST or None, request.FILES or None, instance=profile
     )
-
+    
     confirm = False
 
     c_form = CommentModelForm()
@@ -134,15 +134,15 @@ def profile(request):
         "pos": profile.get_posts_no,
         "post":Post.objects.get(id=request.POST.get("post_id")),
         "form": form,
-        "confirm": confirm,
-        
-        
-        
-        
-    }
+        "confirm": confirm,    }
+    
+            
             return render(request, "blog/profile.html",context)
 
-
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            confirm = True
 
     context = {
         "posts": profile.get_all_authors_posts(),

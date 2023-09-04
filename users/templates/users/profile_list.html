@@ -107,12 +107,13 @@
                   <p
                     class="login100-form-title animated"
                     style="
-                      display: inherit;
+                      display: inline-block;
                       font-family: Poppins-Bold;
                       font-size: 24px;
                       color: #333333;
                       line-height: 1.2;
-                      width: auto;
+                      width: 15%;
+    text-align: -webkit-left;
                     "
                   >
                     {{obj.user}}
@@ -125,17 +126,23 @@
                   >
                     {% csrf_token %}
                     <input type="hidden" name="profile_pk" value="{{obj.pk}}" />
+                    <div style="    display: inline-block;
+    width: 27%;
+    text-align: -webkit-right;">
                     <button type="submit" class="ui positive basic button mb-5">
                       <i class="fa fa-user-plus" aria-hidden="true"></i>
-                    </button>
+                    </button></div>
                   </form>
                   {% endif %} {% if obj.user in rel_receiver and request.user not in obj.friends.all %}
+                  <div style="    display: inline-block;
+    width: 27%;
+    text-align: -webkit-right;">
                   <button
                     class="ui disabled button mb-5"
                     style="margin-left: 3.5%"
                   >
                     <i class="fa fa-clock-o" aria-hidden="true"></i>
-                  </button>
+                  </button></div>
                   {% endif %} {% if request.user in obj.friends.all %}
                   <form
                     action="{% url 'remove-friend' %}"
@@ -144,9 +151,12 @@
                   >
                     {% csrf_token %}
                     <input type="hidden" name="profile_pk" value="{{obj.pk}}" />
+                    <div style="    display: inline-block;
+    width: 27%;
+    text-align: -webkit-right;">
                     <button type="submit" class="ui negative basic button mb-5">
                       <i class="fa fa-user-times" aria-hidden="true"></i>
-                    </button>
+                    </button></div>
                   </form>
                   {% endif %}
                 </span>
