@@ -1,6 +1,7 @@
 from django import forms
 from crispy_forms.helper import FormHelper
 from typing import Any
+from django.forms import ImageField, FileInput
 
 from users.models import Profile
 from .models import Post,Comment
@@ -45,7 +46,27 @@ class PostModelForm(forms.ModelForm):
        
         
 class ProfileModelForm(forms.ModelForm):
-     
+    image = ImageField(widget=FileInput)
+    bgimage = ImageField(widget=FileInput)
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_show_labels = False
+        self.fields["image"].help_text = None
+        self.fields['image'].label = ""
+        self.fields["image"].widget.attrs.update({
+            
+            "style":"margin-left:38%;margin-bottom:3%; height: 40px; width: 29px; position: absolute;opacity:0%", 
+
+        })
+        self.fields["bgimage"].help_text = None
+        self.fields['bgimage'].label = ""
+        self.fields["bgimage"].widget.attrs.update({
+            
+                        "style":"margin-left:38%;margin-bottom:3%; height: 40px; width: 29px; position: absolute;opacity:0%", 
+
+
+        })
     class Meta:
         model = Profile
         fields = ('image','bgimage')

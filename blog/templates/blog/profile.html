@@ -30,10 +30,65 @@
           style="padding: 2%"
         >
           {% csrf_token %} 
-          
+           <div style="width: 100%;    display: flex;
+    flex-direction: row;
+    justify-content: space-between;" >
+            <p class="lFullName text-center fs-18 ProjectColor">
+              Current profile picture
+            </p>
+            <p style="margin-right: 12%;" class="lFullName text-center fs-18 ProjectColor">
+              choose new photo
+            </p>
+            <p class="lFullName text-center fs-18 ProjectColor">
+              new profile picture
+            </p>
+          </div>
+          <div style="display: flex;
+    align-items: center;">
+    
+            <div
+              class="profilePicture"
+              style="background: url('{{ user.profile.image.url }}');height: 100px;
+    width: 100px; margin: 0px;display: -webkit-inline-box; margin-left: 5%;"
+            ></div>
+            <i class="fa fa-2x fa-picture-o" aria-hidden="true" style=" margin-left:38%; margin-top:-5%; position: absolute;"></i>
+          <i class="fa-5x fa fa-long-arrow-right" aria-hidden="true" style="display: inherit; margin-left: 25%;transform: scale(3,1.5);"></i>
+
           {{form.image}}
+          <img id="blah" src="#" alt="nothing" class="profilePicture" style="height: 100px;
+    width: 100px;     margin-left: 33%;
+    margin-top: 1%;display: -webkit-inline-box;"/>
+          </div>
           <br>
+          <div style="width: 100%;    display: flex;
+    flex-direction: row;
+    justify-content: space-between;" >
+            <p class="lFullName text-center fs-18 ProjectColor" >
+              Current background picture
+            </p>
+            <p style="margin-right: 12%;" class="lFullName text-center fs-18 ProjectColor">
+              choose new picture
+            </p>
+            <p class="lFullName text-center fs-18 ProjectColor">
+              new background picture
+            </p>
+          </div>
+          <div style="display: flex;
+    align-items: center;">
+    
+            <div
+              class="profilePicture"
+              style="background: url('{{ user.profile.bgimage.url }}');height: 100px;
+    width: 100px; margin: 0px;display: -webkit-inline-box; margin-left: 5%;"
+            ></div>
+            <i class="fa fa-2x fa-picture-o" aria-hidden="true" style=" margin-left:38%; margin-top:-5%; position: absolute;"></i>
+          <i class="fa-5x fa fa-long-arrow-right" aria-hidden="true" style="display: inherit; margin-left: 25%;transform: scale(3,1.5);"></i>
+
           {{form.bgimage}}
+          <img id="blah2" src="#" alt="nothing" class="profilePicture" style="height: 100px;
+    width: 100px;     margin-left: 33%;
+    margin-top: 1%;display: -webkit-inline-box;"/>
+          </div>
           <div style="text-align: -webkit-right">
             <button type="submit" class="p-2 fs-16 post">save</button>
           </div>
