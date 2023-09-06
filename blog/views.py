@@ -202,8 +202,8 @@ class AddPostView(CreateView, LoginRequiredMixin, UserPassesTestMixin):
         return reverse("blog-home")
 
 
-class PostDetailView(DetailView, LoginRequiredMixin):
-    model = Post
+# class PostDetailView(DetailView, LoginRequiredMixin):
+#     model = Post
 
 
 @login_required
@@ -230,6 +230,18 @@ def details(request, pk):
             instance.save()
 
             c_form = CommentModelForm()
+            context = {
+        "user": request.user,
+        "pos": profile.get_posts_no,
+        "profile": profile,
+
+        "c_form": c_form,
+        "post_added": post_added,
+        
+        "post": post.get ,
+        
+    }
+        return render(request, "blog/post_detail_body.html", context)
     context = {
         "user": request.user,
         "pos": profile.get_posts_no,

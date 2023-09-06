@@ -233,7 +233,7 @@ def ChangePassword(request, token):
 class ProfileDetailView(LoginRequiredMixin, DetailView):
     model = Profile
     template_name = "users/detail.html"
-
+    
     # context ={
     #     'posts':profile.get_all_authors_posts() ,
     #     'user': request.user,
