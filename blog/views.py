@@ -201,9 +201,30 @@ class AddPostView(CreateView, LoginRequiredMixin, UserPassesTestMixin):
     def get_success_url(self):
         return reverse("blog-home")
 
+def detail_view(request, slug):
+    # dictionary for initial data with
+    # field names as keys
+    context ={}
+    c_form = CommentModelForm()
+    post_added = False
+    profile = Profile.objects.get(user=request.user)
+    if "submit_c_form" in request.POST:
+        c_form = CommentModelForm(request.POST)
 
-class PostDetailView(DetailView, LoginRequiredMixin):
-    model = Post
+        if c_form.is_valid():
+            instance = c_form.save(commit=False)
+            instance.user = profile
+            instance.post = Post.objects.get(id=slug)
+            instance.save()
+
+            c_form = CommentModelForm()
+ 
+    # add the dictionary during initialization
+    context["post"] = Post.objects.get(id = slug)
+    context["c_form"] = c_form
+    context["profile"] = profile
+         
+    return render(request, "blog/post_detail_body.html", context)
 
 
 @login_required

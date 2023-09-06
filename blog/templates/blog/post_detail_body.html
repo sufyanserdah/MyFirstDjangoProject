@@ -144,7 +144,47 @@
                     </div>
                   </div>
                   {% endfor %}
-                  
+                   <div class="add-comment col-12 pb-2">
+          <div class="row">
+            <div class="col-1" style="padding-right: 11%">
+              <div class="pt-2 pl-2 d-inline-block">
+                <div
+                  class="Profile-Picture-Comment"
+                  style="background: url('{{ user.profile.image.url }}'); "
+                ></div>
+              </div>
+            </div>
+            <div class="bruh-box col-10 pl-0">
+              <div class="row pr-2 pt-2 pb-2 pl-0">
+                <div class="col pl-0">
+                  <form hx-post="{% url 'profile-detail-view' post.id %}" hx-target="#lol"   action="" enctype="multipart/form-data" id="f" name="f">
+                    {% csrf_token %}
+                    <input type="hidden" name="post_id" value="{{post.id}}" />
+                    <div
+                      style="
+                        border-radius: 25px;
+                        border: 1px solid #c6c8ca;
+                        width: 100%;
+                      "
+                    >
+                      {{c_form}}
+                    </div>
+                    <div class="action p-2 pr-3">
+                      <button
+                        type="submit"
+                        class="float-r p-2 fs-16 post"
+                        name="submit_c_form"
+                        style="width: 100px"
+                      >
+                        Comment
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
                   
                 </div>
@@ -289,8 +329,49 @@
                     </div>
                   </div>
                   {% endfor %}
-                  
-
+                  <div class="add-comment col-12 pb-2">
+          <div class="row">
+            <div class="col-1" style="padding-right: 11%">
+              <div class="pt-2 pl-2 d-inline-block">
+                <div
+                  class="Profile-Picture-Comment"
+                  style="background: url('{{ user.profile.image.url }}'); "
+                ></div>
+              </div>
+            </div>
+            <div class="bruh-box col-10 pl-0">
+              <div class="row pr-2 pt-2 pb-2 pl-0">
+                <div class="col pl-0">
+                  <form hx-post="{% url 'profile-detail-view' post.id %}" hx-target="#lol"   action="" enctype="multipart/form-data" id="f" name="f">
+                    {% csrf_token %}
+                    <input type="hidden" name="post_id" value="{{post.id}}" />
+                    <div
+                      style="
+                        border-radius: 25px;
+                        border: 1px solid #c6c8ca;
+                        width: 100%;
+                      "
+                    >
+                      {{c_form}}
+                    </div>
+                    <div class="action p-2 pr-3">
+                      <button
+                        type="submit"
+                        class="float-r p-2 fs-16 post"
+                        name="submit_c_form"
+                        style="width: 100px"
+                      >
+                        Comment
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+                    
+                    
                   
                 </div>
                 </div>
