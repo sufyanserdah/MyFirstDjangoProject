@@ -1,7 +1,7 @@
 from . import views 
 from django.urls import path
 from django.contrib.auth import views as user_view
-from .views import AddPostView,like_unlike_post, PostDeleteView,PostUpdateView
+from .views import PostDetailView, AddPostView,like_unlike_post, PostDeleteView,PostUpdateView
 urlpatterns = [
     path('', views.home, name="blog-home"),
     
