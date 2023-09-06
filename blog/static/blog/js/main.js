@@ -35,6 +35,9 @@ function readURL2(input) {
 $("#id_bgimage").change(function(){
     readURL2(this);
 });
+function myFunction() {
+    console.log("dks;kfdsl;kfl;ds")
+   document.getElementById("blah").src="desktop-wallpaper-white-backgrounds-plain-https-www-pop-white-background-white-thumbnail.jpg";}
 if(window.history.replaceState){
 
     window.history.replaceState(null,null,window.location.href);
