@@ -56,14 +56,14 @@ class ProfileModelForm(forms.ModelForm):
         self.fields['image'].label = ""
         self.fields["image"].widget.attrs.update({
             
-            "style":"margin-left:38%;margin-bottom:3%; height: 40px; width: 29px; position: absolute;opacity:0%", 
+            "style":"     margin-left: 2%; margin-bottom: -28%; height: 12px; width: 37%; position: absolute; opacity:0%", 
 
         })
         self.fields["bgimage"].help_text = None
         self.fields['bgimage'].label = ""
         self.fields["bgimage"].widget.attrs.update({
             
-                        "style":"margin-left:38%;margin-bottom:3%; height: 40px; width: 29px; position: absolute;opacity:0%", 
+                        "style":"    margin-left: 55%; margin-bottom: -13%; height: 15px; width: 30%; position: absolute;opacity:0%", 
 
 
         })

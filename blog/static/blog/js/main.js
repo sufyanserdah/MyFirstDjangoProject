@@ -1,4 +1,6 @@
-
+function backgroundImage() {
+document.getElementById('head').setAttribute("style", "background-image: url('template3.PNG')")
+}
 function readURL(input) {
     if (input.files && input.files[0]) {
         console.log("ooooooo")
@@ -7,7 +9,7 @@ function readURL(input) {
 
         reader.onload = function (e) {
             console.log("ooooooo")
-            $('#blah').attr('src', e.target.result);
+document.getElementById('blah2').setAttribute("style", "background-image: url(' e.target.result ')")
         }
 
         reader.readAsDataURL(input.files[0]);

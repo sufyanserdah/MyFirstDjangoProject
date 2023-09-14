@@ -233,32 +233,11 @@ def ChangePassword(request, token):
 class ProfileDetailView(LoginRequiredMixin, DetailView):
     model = Profile
     template_name = "users/detail.html"
-    
-    # context ={
-    #     'posts':profile.get_all_authors_posts() ,
-    #     'user': request.user,
-    #     'im': Profile.objects.filter(user= request.user),
-    #     'profile':profile,
-    #     'friends': profile.get_friends(),
-    #     'p_form':p_form,
-    #     'c_form':c_form,
-    #     'post_added':post_added,
-    #     'pos': profile.get_posts_no,
-    #     'profile':profile,
-    #     'form':form,
-    #     'confirm':confirm,
-    #     'friends': profile.get_friends(),
-
-    #     'p_form':p_form,
-    #     'c_form':c_form,
-    #     'post_added':post_added,
-    # }
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = User.objects.get(username__iexact=self.request.user)
         profile = Profile.objects.get(user=user)
-
         rel_r = Relationship.objects.filter(sender=profile)
         rel_s = Relationship.objects.filter(receiver=profile)
         rel_receiver = []
@@ -275,6 +254,7 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
             True if len(self.get_object().get_all_authors_posts()) > 0 else False
         )
         context["profile"] = profile
+        context["profile1"] = profile
 
         context["user"] = user
 
