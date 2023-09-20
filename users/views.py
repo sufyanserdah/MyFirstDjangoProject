@@ -1,7 +1,7 @@
 from typing import Any, Dict
 import uuid
 from django.db.models.query import QuerySet
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.shortcuts import render, redirect
@@ -43,8 +43,9 @@ def logout_required(function=None, logout_url=settings.LOGOUT_URL):
 
 @logout_required
 def register(request):
+    form = RegisterForm(request.POST)
+
     if request.method == "POST":
-        form = RegisterForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password1")
@@ -52,19 +53,25 @@ def register(request):
                 messages.warning(
                     request, "The password must contain at least 9 charachters: "
                 )
-                return redirect(f"/")
+                
+                context = {"form": form}
+                return render(request, "users/register.html", context)
             if UppercaseValidator().validate(password):
                 messages.warning(
                     request,
                     "The password must contain at least 1 uppercase letter, A-Z.",
                 )
-                return redirect(f"/")
+                
+                context = {"form": form}
+                return render(request, "users/register.html", context)
 
             if NumberValidator().validate(password):
                 messages.warning(
                     request, "The password must contain at least 1 digit, 0-9."
                 )
-                return redirect(f"/")
+                
+                context = {"form": form}
+                return render(request, "users/register.html", context)
 
             if SymbolValidator().validate(password):
                 messages.warning(
@@ -72,14 +79,18 @@ def register(request):
                     "The password must contain at least 1 special character: "
                     + "()[]{}|\`~!@#$%^&*_-+=;:'\",<>./?",
                 )
-                return redirect(f"/")
+                
+                context = {"form": form}
+                return render(request, "users/register.html", context)
 
             if RepeatedValidator().validate(password):
                 messages.warning(
                     request,
                     "The password cannot be the same as previously used passwords.",
                 )
-                return redirect(f"/")
+                
+                context = {"form": form}
+                return render(request, "users/register.html", context)
             form.save()
             messages.success(request, f"Account created for {username} ")
             return redirect("blog-login")
